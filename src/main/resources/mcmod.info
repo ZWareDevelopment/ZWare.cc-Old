@@ -1,0 +1,16 @@
+[
+{
+  "modid": "zware",
+  "name": "ZWare",
+  "description": "Minecraft Utility mod.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "https://zware.cc/",
+  "updateUrl": "https://download.zware.cc/",
+  "authorList": ["Zihasz", "Hqrion", "Historian"],
+  "credits": "Forge Team for Forge, Zero for Alpine, Minnced for DiscordRPC, SpongePowered for Mixins",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": ["Mixins", "Alpine", "Discord RPC"]
+}
+]

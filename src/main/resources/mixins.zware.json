@@ -1,0 +1,19 @@
+{
+  "required": true,
+  "compatibilityLevel": "JAVA_8",
+  "minVersion": "0.7",
+  "package": "dev.zihasz.zware.mixin",
+  "refmap": "mixins.zware.refmap.json",
+  "mixins": [
+	"entity.MixinEntity",
+	"network.MixinC00Handshake",
+	"network.MixinClientBrandRetriever",
+	"network.MixinNetHandlerPlayClient",
+	"network.MixinNetworkManager",
+	"player.MixinAbstractClientPlayer",
+	"player.MixinEntityPlayer",
+	"player.MixinPlayerControllerMP",
+	"render.MixinItemRenderer",
+	"render.MixinRenderItem"
+  ]
+}
