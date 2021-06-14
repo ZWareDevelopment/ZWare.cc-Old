@@ -29,8 +29,10 @@ public class Animations extends Module {
 			mc.player.swingingHand = EnumHand.OFF_HAND;
 		}
 		if (mode.getValue() == Mode.OneDotEight) {
-			if (mc.entityRenderer.itemRenderer.prevEquippedProgressMainHand >= 0.9)
+			if (mc.entityRenderer.itemRenderer.prevEquippedProgressMainHand >= 0.9) {
 				mc.entityRenderer.itemRenderer.equippedProgressMainHand = 1.0f;
+				mc.entityRenderer.itemRenderer.itemStackMainHand = mc.player.getHeldItemMainhand();
+			}
 		}
 	}
 
