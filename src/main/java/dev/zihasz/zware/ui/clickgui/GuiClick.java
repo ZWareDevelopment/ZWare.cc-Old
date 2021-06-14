@@ -11,6 +11,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,7 +22,7 @@ public class GuiClick extends GuiScreen {
 
 	public GuiClick() {
 		int offX = 0;
-		for (Category category : Arrays.stream(Category.values()).sorted().collect(Collectors.toList())) {
+		for (Category category : Arrays.stream(Category.values()).sorted(Comparator.comparing(Category::toString)).collect(Collectors.toList())) {
 			panels.add(new Frame(category, 40 + offX, 40, 100, 20, defaultScheme));
 			offX += 110;
 		}

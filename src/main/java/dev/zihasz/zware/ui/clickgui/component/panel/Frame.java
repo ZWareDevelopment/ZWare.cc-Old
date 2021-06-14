@@ -11,6 +11,7 @@ import dev.zihasz.zware.utils.render.TextRenderer;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,7 +26,7 @@ public class Frame extends Panel {
 		this.category = category;
 
 		int offsetY = height;
-		for (Module module : ModuleManager.getModules(category).stream().sorted().collect(Collectors.toList())) {
+		for (Module module : ModuleManager.getModules(category).stream().sorted(Comparator.comparing(Module::getName)).collect(Collectors.toList())) {
 			buttons.add(new ModuleComponent(x, y + offsetY, width, height, colorScheme, module));
 			offsetY += height;
 		}
