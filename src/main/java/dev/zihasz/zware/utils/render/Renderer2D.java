@@ -1,6 +1,8 @@
 package dev.zihasz.zware.utils.render;
 
 import dev.zihasz.zware.utils.Util;
+import dev.zihasz.zware.utils.math.MathUtils;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.EntityLivingBase;
@@ -17,7 +19,7 @@ public class Renderer2D implements Util, Renderer {
 		float red = (float) color.getRed() / 255;
 		float green = (float) color.getGreen() / 255;
 		float blue = (float) color.getBlue() / 255;
-		final Tessellator tessellator = Tessellator.getInstance();
+		final net.minecraft.client.renderer.Tessellator tessellator = net.minecraft.client.renderer.Tessellator.getInstance();
 		final BufferBuilder bufferbuilder = tessellator.getBuffer();
 		GlStateManager.enableBlend();
 		GlStateManager.disableTexture2D();
@@ -31,12 +33,13 @@ public class Renderer2D implements Util, Renderer {
 		GlStateManager.enableTexture2D();
 		GlStateManager.disableBlend();
 	}
+
 	public static void drawBorder(float x, float y, float w, float h, float width, Color color) {
 		float alpha = (float) color.getAlpha() / 255;
 		float red = (float) color.getRed() / 255;
 		float green = (float) color.getGreen() / 255;
 		float blue = (float) color.getBlue() / 255;
-		final Tessellator tessellator = Tessellator.getInstance();
+		final net.minecraft.client.renderer.Tessellator tessellator = net.minecraft.client.renderer.Tessellator.getInstance();
 		final BufferBuilder bufferbuilder = tessellator.getBuffer();
 		GlStateManager.enableBlend();
 		GlStateManager.disableTexture2D();
@@ -51,38 +54,9 @@ public class Renderer2D implements Util, Renderer {
 		GlStateManager.enableTexture2D();
 		GlStateManager.disableBlend();
 	}
-	public static void drawCircle(float x, float y, float r, float w, Color color) {
-		final Tessellator tessellator = Tessellator.getInstance();
-		final BufferBuilder bufferbuilder = tessellator.getBuffer();
 
-		GlStateManager.enableBlend();
-		GlStateManager.disableTexture2D();
-		GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-		glEnable(GL_LINE_SMOOTH);
-		glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
-		GL11.glLineWidth(w);
-		bufferbuilder.begin(GL11.GL_LINE_LOOP, DefaultVertexFormats.POSITION_COLOR);
-		final int red = color.getRed();
-		final int blue = color.getBlue();
-		final int green = color.getGreen();
-		final int alpha = color.getAlpha();
-
-		for (int a = 0; a < 360; a++) {
-			final double x1 = x + (r * Math.sin(Math.toRadians(a)));
-			final double z1 = y + (r * Math.cos(Math.toRadians(a)));
-
-			bufferbuilder.pos(x1, z1, 0.0f).color(red, green, blue, alpha).endVertex();
-		}
-
-		tessellator.draw();
-		GlStateManager.shadeModel(GL_FLAT);
-		glDisable(GL_LINE_SMOOTH);
-		GlStateManager.enableTexture2D();
-		GlStateManager.disableBlend();
-	}
-
-	public static void drawRectRainbowH(float x, float y, float w, float h, int speed, int speed2, int alpha) {
-		final Tessellator tessellator = Tessellator.getInstance();
+	public static void drawRainbowRectHorizontal(float x, float y, float w, float h, int speed, int speed2, int alpha) {
+		final net.minecraft.client.renderer.Tessellator tessellator = net.minecraft.client.renderer.Tessellator.getInstance();
 		final BufferBuilder bufferbuilder = tessellator.getBuffer();
 		Rainbow rainbow = new Rainbow();
 
@@ -103,8 +77,9 @@ public class Renderer2D implements Util, Renderer {
 		GlStateManager.enableTexture2D();
 		GlStateManager.disableBlend();
 	}
-	public static void drawRectRainbowV(float x, float y, float w, float h, int speed, int speed2, int alpha) {
-		final Tessellator tessellator = Tessellator.getInstance();
+
+	public static void drawRainbowRectVertical(float x, float y, float w, float h, int speed, int speed2, int alpha) {
+		final net.minecraft.client.renderer.Tessellator tessellator = net.minecraft.client.renderer.Tessellator.getInstance();
 		final BufferBuilder bufferbuilder = tessellator.getBuffer();
 		Rainbow rainbow = new Rainbow();
 
@@ -129,8 +104,66 @@ public class Renderer2D implements Util, Renderer {
 		GlStateManager.enableTexture2D();
 		GlStateManager.disableBlend();
 	}
-	public static void drawRectAlpha(float x, float y, float w, float h, Color color) {
-		final Tessellator tessellator = Tessellator.getInstance();
+
+	public static void drawEntityOnScreen(int posX, int posY, int scale, float mouseY, EntityLivingBase ent) {
+		GlStateManager.enableColorMaterial();
+		GlStateManager.pushMatrix();
+		GlStateManager.translate((float) posX, (float) posY, 50.0F);
+		GlStateManager.scale((float) (-scale), (float) scale, (float) scale);
+		GlStateManager.rotate(180.0F, 0.0F, 0.0F, 1.0F);
+		GlStateManager.rotate(135.0F, 0.0F, 1.0F, 0.0F);
+		RenderHelper.enableStandardItemLighting();
+		GlStateManager.rotate(-135.0F, 0.0F, 1.0F, 0.0F);
+		GlStateManager.rotate(-((float) Math.atan(mouseY / 40.0F)) * 20.0F, 1.0F, 0.0F, 0.0F);
+		GlStateManager.translate(0.0F, 0.0F, 0.0F);
+		mc.getRenderManager().setPlayerViewY(180.0F);
+		mc.getRenderManager().setRenderShadow(false);
+		mc.getRenderManager().renderEntity(ent, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F, false);
+		mc.getRenderManager().setRenderShadow(true);
+		GlStateManager.popMatrix();
+		RenderHelper.disableStandardItemLighting();
+		GlStateManager.disableRescaleNormal();
+		GlStateManager.setActiveTexture(OpenGlHelper.lightmapTexUnit);
+		GlStateManager.disableTexture2D();
+		GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
+	}
+
+	public static void drawColorPickerSquare(float x, float y, float w, float h, int hue, int alpha) {
+		final net.minecraft.client.renderer.Tessellator tessellator = net.minecraft.client.renderer.Tessellator.getInstance();
+		final BufferBuilder bufferbuilder = tessellator.getBuffer();
+
+		GlStateManager.enableBlend();
+		GlStateManager.disableTexture2D();
+		GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+		bufferbuilder.begin(7, DefaultVertexFormats.POSITION_COLOR);
+		final float oneW = w / 100f;
+		final float oneY = h / 100f;
+
+		for (int a = 0; a <= 100; a++) {
+			for (int b = 0; b <= 100; b++) {
+				Color color = new Color(Color.HSBtoRGB(hue / 360f, a / 100f, b / 100f));
+
+				int red = color.getRed();
+				int blue = color.getBlue();
+				int green = color.getGreen();
+
+				final float curW = ((a / 100f) * w);
+				final float curH = ((b / 100f) * h);
+
+				bufferbuilder.pos(x + curW, y + curH - oneY, 0.0D).color(red, green, blue, alpha).endVertex();
+				bufferbuilder.pos(x + curW - oneW, y + curH - oneY, 0.0D).color(red, green, blue, alpha).endVertex();
+				bufferbuilder.pos(x + curW - oneW, y + curH, 0.0D).color(red, green, blue, alpha).endVertex();
+				bufferbuilder.pos(x + curW, y + curH, 0.0D).color(red, green, blue, alpha).endVertex();
+			}
+		}
+
+		tessellator.draw();
+		GlStateManager.enableTexture2D();
+		GlStateManager.disableBlend();
+	}
+
+	public static void drawAlphaRect(float x, float y, float w, float h, Color color) {
+		final net.minecraft.client.renderer.Tessellator tessellator = net.minecraft.client.renderer.Tessellator.getInstance();
 		final BufferBuilder bufferbuilder = tessellator.getBuffer();
 
 		GlStateManager.enableBlend();
@@ -156,8 +189,9 @@ public class Renderer2D implements Util, Renderer {
 		GlStateManager.enableTexture2D();
 		GlStateManager.disableBlend();
 	}
-	public static void drawRectHue(float x, float y, float w, float h) {
-		final Tessellator tessellator = Tessellator.getInstance();
+
+	public static void drawHueRect(float x, float y, float w, float h) {
+		final net.minecraft.client.renderer.Tessellator tessellator = net.minecraft.client.renderer.Tessellator.getInstance();
 		final BufferBuilder bufferbuilder = tessellator.getBuffer();
 
 		GlStateManager.enableBlend();
@@ -187,28 +221,52 @@ public class Renderer2D implements Util, Renderer {
 		GlStateManager.disableBlend();
 	}
 
-	public static void drawEntityOnScreen(int posX, int posY, int scale, float mouseY, EntityLivingBase ent) {
-		GlStateManager.enableColorMaterial();
-		GlStateManager.pushMatrix();
-		GlStateManager.translate((float) posX, (float) posY, 50.0F);
-		GlStateManager.scale((float) (-scale), (float) scale, (float) scale);
-		GlStateManager.rotate(180.0F, 0.0F, 0.0F, 1.0F);
-		GlStateManager.rotate(135.0F, 0.0F, 1.0F, 0.0F);
-		RenderHelper.enableStandardItemLighting();
-		GlStateManager.rotate(-135.0F, 0.0F, 1.0F, 0.0F);
-		GlStateManager.rotate(-((float) Math.atan(mouseY / 40.0F)) * 20.0F, 1.0F, 0.0F, 0.0F);
-		GlStateManager.translate(0.0F, 0.0F, 0.0F);
-		mc.getRenderManager().setPlayerViewY(180.0F);
-		mc.getRenderManager().setRenderShadow(false);
-		mc.getRenderManager().renderEntity(ent, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F, false);
-		mc.getRenderManager().setRenderShadow(true);
-		GlStateManager.popMatrix();
-		RenderHelper.disableStandardItemLighting();
-		GlStateManager.disableRescaleNormal();
-		GlStateManager.setActiveTexture(OpenGlHelper.lightmapTexUnit);
+	public static void drawCircle(float x, float y, float r, float w, Color color) {
+		final net.minecraft.client.renderer.Tessellator tessellator = Tessellator.getInstance();
+		final BufferBuilder bufferbuilder = tessellator.getBuffer();
+
+		GlStateManager.enableBlend();
 		GlStateManager.disableTexture2D();
-		GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
+		GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+		glEnable(GL_LINE_SMOOTH);
+		glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
+		GL11.glLineWidth(w);
+		bufferbuilder.begin(GL11.GL_LINE_LOOP, DefaultVertexFormats.POSITION_COLOR);
+		final int red = color.getRed();
+		final int blue = color.getBlue();
+		final int green = color.getGreen();
+		final int alpha = color.getAlpha();
+
+		for (int a = 0; a < 360; a++) {
+			final double x1 = x + (r * Math.sin(Math.toRadians(a)));
+			final double z1 = y + (r * Math.cos(Math.toRadians(a)));
+
+			bufferbuilder.pos(x1, z1, 0.0f).color(red, green, blue, alpha).endVertex();
+		}
+
+		tessellator.draw();
+		GlStateManager.shadeModel(GL_FLAT);
+		glDisable(GL_LINE_SMOOTH);
+		GlStateManager.enableTexture2D();
+		GlStateManager.disableBlend();
 	}
+
+	public static void scissor(Quad quad) {
+		GL11.glPushAttrib(GL_SCISSOR_BIT);
+		GL11.glEnable(GL_SCISSOR_TEST);
+		final ScaledResolution res = new ScaledResolution(mc);
+		GL11.glScissor((int) quad.getX() * res.getScaleFactor(), (res.getScaledHeight() - (int) quad.getBottom()) * res.getScaleFactor(), (int) quad.width() * res.getScaleFactor(), (int) quad.height() * res.getScaleFactor());
+	}
+
+	public static void restoreScissor() {
+		GL11.glPopAttrib();
+		GL11.glDisable(GL_SCISSOR_TEST);
+	}
+
+	public static Color lower(Color color, int alpha) {
+		return new Color(color.getRed(), color.getGreen(), color.getBlue(), (int) MathUtils.clamp(0, 255, color.getAlpha() - alpha));
+	}
+
 	public static void glColor(Color color) {
 		GlStateManager.color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
 	}

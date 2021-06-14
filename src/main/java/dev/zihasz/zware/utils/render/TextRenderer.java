@@ -25,18 +25,8 @@ public class TextRenderer implements Renderer, Util {
 		drawString(text, x, y, color, true);
 	}
 
-	public static void drawStringCentered(String text, float x, float y, Color color, boolean shadow) {
-		if (FontModule.custom.getValue()) {
-			renderer.drawString(text, x + (renderer.getStringWidth(text) / 2f), y, color.getRGB(), shadow);
-		} else {
-			mc.fontRenderer.drawString(text, x + (renderer.getStringWidth(text) / 2f), y, color.getRGB(), shadow);
-		}
-	}
-	public static void drawStringCentered(String text, float x, float y, Color color) {
-		drawStringCentered(text, x, y, color, false);
-	}
-	public static void drawStringCenteredWithShadow(String text, float x, float y, Color color) {
-		drawStringCentered(text, x, y, color, true);
+	public static void drawCenteredString(String text, int x, int y, int width, int height, Color color, boolean shadow) {
+		TextRenderer.drawString(text, x + (width / 2) - (TextRenderer.getStringWidth(text) / 2), y + (height / 2) - (TextRenderer.getFontHeight() / 2), color, shadow);
 	}
 
 	public static void drawStringRight(String text, float right, float y, Color color, boolean shadow) {

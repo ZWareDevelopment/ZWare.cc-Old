@@ -14,7 +14,7 @@ import net.minecraft.util.EnumHand;
 public class Animations extends Module {
 
 	public Animations() {
-		super("Animations", "Change animations", Category.MISC);
+		super("Animations", "Change animations", Category.RENDER);
 	}
 
 	private final Setting<Mode> mode = new Setting<>("OldAnimations", "Bring back old animations", Mode.OneDotEight);

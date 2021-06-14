@@ -34,6 +34,7 @@ minecraft {
 repositories {
     jcenter()
     mavenCentral()
+    maven { url = 'https://lukflug.github.io/maven' }
     maven { url = 'https://repo.spongepowered.org/maven' }
     maven { url = 'https://jitpack.io/' }
 }
@@ -52,6 +53,9 @@ dependencies {
     compile group: 'club.minnced', name: 'java-discord-rpc', version: '2.0.1'
     compile group: 'com.github.oshi', name: 'oshi-core', version: '5.7.2'
     compile 'com.github.zihasz:sec4j:1.0.0'
+
+    compile('com.lukflug:panelstudio:0.1.11')
+    compile('com.lukflug:panelstudio-mc12:0.1.8')
 }
 
 processResources {
@@ -79,6 +83,8 @@ shadowJar {
         include(dependency('org.javassist:javassist'))
         include(dependency('com.github.oshi:oshi-core'))
         include(dependency('com.github.zihasz:sec4j'))
+        include(dependency('com.lukflug:panelstudio'))
+        include(dependency('com.lukflug:panelstudio-mc12'))
     }
     exclude 'dummyThing'
     exclude 'LICENSE.txt'

@@ -1,5 +1,6 @@
 package dev.zihasz.zware.manager;
 
+import dev.zihasz.zware.ZWare;
 import dev.zihasz.zware.features.module.Category;
 import dev.zihasz.zware.features.module.Module;
 import dev.zihasz.zware.features.setting.Setting;
@@ -16,12 +17,14 @@ public class ModuleManager {
 	private static List<Module> modules = new ArrayList<>();
 
 	public ModuleManager() {
-		Set<Class> moduleClasses = findClasses(Module.class.getPackage().getName(), Module.class);
-		moduleClasses.forEach(moduleClass -> {
+		Set<Class> classes = findClasses(Module.class.getPackage().getName(), Module.class);
+		classes.forEach(moduleClass -> {
 			try {
 				this.addModule((Module) moduleClass.newInstance());
 			} catch (Exception ignored) {}
 		});
+
+		modules.forEach(module -> ZWare.BUS.register(module.getClass()));
 	}
 
 	private void addModule(Module module) {

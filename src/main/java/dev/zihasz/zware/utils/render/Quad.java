@@ -1,4 +1,4 @@
-package dev.zihasz.zware.utils.render.skeet;
+package dev.zihasz.zware.utils.render;
 
 import dev.zihasz.zware.utils.Util;
 import net.minecraft.client.gui.ScaledResolution;

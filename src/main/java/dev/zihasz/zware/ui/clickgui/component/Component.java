@@ -2,8 +2,8 @@ package dev.zihasz.zware.ui.clickgui.component;
 
 public interface Component {
 
-	void draw();
-	void click(int mX, int mY, int button);
-	void press(int button, char keyChar);
+	void draw(int x, int y);
+	void click(int x, int y, int button);
+	void press(int code, char character);
 
 }

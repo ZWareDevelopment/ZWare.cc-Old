@@ -3,7 +3,6 @@ package dev.zihasz.zware.security.auth;
 import dev.zihasz.sec4j.encryption.AES;
 import dev.zihasz.sec4j.hashing.SHA2;
 import dev.zihasz.zware.ZWare;
-import dev.zihasz.zware.security.utils.Keys;
 import dev.zihasz.zware.utils.Util;
 import org.jetbrains.annotations.Nullable;
 import oshi.SystemInfo;
@@ -19,7 +18,7 @@ public class HWID implements Util {
 	@Nullable
 	public static String getHWID() {
 		try {
-			return AES.encrypt(hwid(), Keys.HWID_KEY, "hwid");
+			return AES.encrypt(hwid(), "", "hwid");
 		} catch (Exception exception) {
 			if (ZWare.clientManager.isDebug()) ZWare.LOGGER.error(exception.getMessage());
 		}

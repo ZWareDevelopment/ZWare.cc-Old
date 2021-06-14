@@ -1,5 +1,6 @@
 package dev.zihasz.zware.utils.render.skeet;
 
+import dev.zihasz.zware.utils.render.Quad;
 import dev.zihasz.zware.utils.render.Rainbow;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;

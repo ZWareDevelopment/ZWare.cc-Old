@@ -29,4 +29,5 @@ public class GuiCMM extends GuiScreen {
 	protected void keyTyped(char typedChar, int keyCode) throws IOException {
 
 	}
+
 }

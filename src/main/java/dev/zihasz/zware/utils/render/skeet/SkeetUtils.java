@@ -2,6 +2,7 @@ package dev.zihasz.zware.utils.render.skeet;
 
 
 import dev.zihasz.zware.utils.Util;
+import dev.zihasz.zware.utils.render.Quad;
 
 import java.awt.*;
 

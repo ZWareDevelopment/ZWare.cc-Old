@@ -29,7 +29,6 @@ public abstract class Module extends Feature {
 		this.category = category;
 		this.bind = bind;
 		this.visible = visible;
-		ZWare.BUS.register(this);
 	}
 	public Module(String name, String description, Category category, int bind) { this(name, description, category, bind, true); }
 	public Module(String name, String description, Category category)           { this(name, description, category, Keyboard.KEY_NONE); }
