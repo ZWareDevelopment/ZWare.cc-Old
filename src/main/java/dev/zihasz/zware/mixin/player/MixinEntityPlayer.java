@@ -19,7 +19,7 @@ public abstract class MixinEntityPlayer extends EntityLivingBase {
 		super(worldIn);
 	}
 
-	@Inject(method = "isPushedByWater()Z", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "isPushedByWater", at = @At("HEAD"), cancellable = true)
 	public void onPushedByWater(CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
 		WaterPushEvent event = new WaterPushEvent(EventState.PRE);
 		MinecraftForge.EVENT_BUS.post(event);

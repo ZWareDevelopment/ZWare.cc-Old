@@ -45,7 +45,7 @@ public class ZWare {
 	 */
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent event) {
-		Tracking.onStarted();
+		// Tracking.onStarted();
 
 		clientManager = new ClientManager();
 		commandManager = new CommandManager();
@@ -55,7 +55,7 @@ public class ZWare {
 		ConfigManager.load();
 
 		Runtime.getRuntime().addShutdownHook(new Thread(ConfigManager::save));
-		Runtime.getRuntime().addShutdownHook(new Thread(Tracking::onStopped));
+		// Runtime.getRuntime().addShutdownHook(new Thread(Tracking::onStopped));
 	}
 
 	/**
