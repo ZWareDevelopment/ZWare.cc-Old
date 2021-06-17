@@ -22,7 +22,7 @@ public class MixinNetworkManager {
 		if (event.isCanceled()) callbackInfo.cancel();
 	}
 
-	@Inject(method = "channelRead0", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "channelRead0(Lio/netty/channel/ChannelHandlerContext;Lnet/minecraft/network/Packet;)V", at = @At("HEAD"), cancellable = true)
 	private void channelRead0(ChannelHandlerContext context, Packet<?> packet, CallbackInfo callbackInfo) {
 		PacketEvent event = new PacketEvent.Read(packet, EventState.PRE);
 		MinecraftForge.EVENT_BUS.post(event);

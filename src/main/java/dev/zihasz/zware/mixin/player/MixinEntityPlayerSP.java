@@ -23,7 +23,7 @@ public class MixinEntityPlayerSP extends AbstractClientPlayer {
 		super(worldIn, playerProfile);
 	}
 
-	@Inject(method = "onUpdateWalkingPlayer", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "onUpdateWalkingPlayer()V", at = @At("HEAD"), cancellable = true)
 	public void onUpdateWalkingPlayer(CallbackInfo info) {
 		UpdateWalkingPlayerEvent event = new UpdateWalkingPlayerEvent(EventState.PRE);
 		MinecraftForge.EVENT_BUS.post(event);
@@ -32,7 +32,7 @@ public class MixinEntityPlayerSP extends AbstractClientPlayer {
 			info.cancel();
 	}
 
-	@Redirect(method = "move", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/entity/AbstractClientPlayer;move(Lnet/minecraft/entity/MoverType;DDD)V"))
+	@Redirect(method = "move(Lnet/minecraft/entity/MoverType;DDD)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/entity/AbstractClientPlayer;move(Lnet/minecraft/entity/MoverType;DDD)V"))
 	public void move(AbstractClientPlayer player, MoverType type, double x, double y, double z) {
 		MoveEvent event = new MoveEvent(EventState.PRE, type, x, y, z);
 		MinecraftForge.EVENT_BUS.post(event);

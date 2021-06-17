@@ -27,7 +27,7 @@ public abstract class MixinAbstractClientPlayer extends EntityPlayer {
 	@Shadow @Nullable
 	protected abstract NetworkPlayerInfo getPlayerInfo();
 
-	@Inject(method = "getLocationCape", at = @At(value = "RETURN"), cancellable = true)
+	@Inject(method = "getLocationCape()Lnet/minecraft/util/ResourceLocation;", at = @At(value = "RETURN"), cancellable = true)
 	public void getCape(CallbackInfoReturnable<ResourceLocation> cir) {
 		UUID uuid = Objects.requireNonNull(getPlayerInfo()).getGameProfile().getId();
 

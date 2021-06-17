@@ -16,14 +16,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(NetHandlerPlayClient.class)
 public class MixinNetHandlerPlayClient {
 
-	@Inject(method = "handleJoinGame", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "handleJoinGame(Lnet/minecraft/network/play/server/SPacketJoinGame;)V", at = @At("HEAD"), cancellable = true)
 	public void handleJoinGame(SPacketJoinGame packetJoinGame, CallbackInfo info) {
 		if (ModuleManager.getModule(FakeLunar.class).isEnabled()) {
 			Minecraft.getMinecraft().player.connection.sendPacket(new CPacketCustomPayload(
 					"Lunar-Client",
 					new PacketBuffer(Unpooled.buffer()).writeByteArray(Minecraft.getMinecraft().session.getPlayerID().getBytes())
 			));
-			System.out.println("Sent CPacketCustomPayload");
 		}
 	}
 
