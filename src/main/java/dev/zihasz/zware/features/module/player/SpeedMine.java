@@ -1,6 +1,5 @@
 package dev.zihasz.zware.features.module.player;
 
-import dev.xdark.ssbus.Listener;
 import dev.zihasz.zware.event.EventState;
 import dev.zihasz.zware.event.events.BlockEvent;
 import dev.zihasz.zware.event.events.PacketEvent;
@@ -19,6 +18,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.awt.*;
 import java.util.Objects;
@@ -91,7 +91,7 @@ public class SpeedMine extends Module {
 		}
 	}
 
-	@Listener
+	@SubscribeEvent
 	public void onPacketSend(PacketEvent.Send event) {
 		if (!event.getState().equals(EventState.PRE)) return;
 		if (event.getPacket() instanceof CPacketPlayerDigging) {
@@ -101,7 +101,7 @@ public class SpeedMine extends Module {
 		}
 	}
 
-	@Listener
+	@SubscribeEvent
 	public void onBlockClick(BlockEvent.Click event) {
 		if (currentBlock == null) {
 			currentBlock = event.getBlockPos();
@@ -122,7 +122,7 @@ public class SpeedMine extends Module {
 		}
 	}
 
-	@Listener
+	@SubscribeEvent
 	public void onBlockDamage(BlockEvent.Damage event) {
 		if (mode.getValue() == Mode.DAMAGE) {
 			if (mc.playerController.curBlockDamageMP >= endDamage.getValue()) {
@@ -131,7 +131,7 @@ public class SpeedMine extends Module {
 		}
 	}
 
-	@Listener
+	@SubscribeEvent
 	public void onBlockBreak(BlockEvent.Break event) {
 		if (event.getBlockPos() == currentBlock) {
 			currentBlock = null;

@@ -1,10 +1,9 @@
 package dev.zihasz.zware;
 
-import dev.xdark.ssbus.Bus;
-import dev.zihasz.zware.event.Event;
 import dev.zihasz.zware.event.EventProcessor;
 import dev.zihasz.zware.manager.*;
 import dev.zihasz.zware.mixin.MixinLoader;
+import dev.zihasz.zware.security.Tracking;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -22,7 +21,6 @@ public class ZWare {
 	public static final String MOD_VERSION_PREFIX = "v";
 
 	public static final Logger LOGGER = LogManager.getLogger(MOD_NAME);
-	public static final Bus<Event> BUS = new Bus<>(Event.class);
 
 	public static MixinLoader mixinLoader;
 	public static EventProcessor eventProcessor;
@@ -47,7 +45,7 @@ public class ZWare {
 	 */
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent event) {
-		// Tracking.onStarted();
+		Tracking.onStarted();
 
 		clientManager = new ClientManager();
 		commandManager = new CommandManager();
@@ -57,7 +55,7 @@ public class ZWare {
 		ConfigManager.load();
 
 		Runtime.getRuntime().addShutdownHook(new Thread(ConfigManager::save));
-		// Runtime.getRuntime().addShutdownHook(new Thread(Tracking::onStopped));
+		Runtime.getRuntime().addShutdownHook(new Thread(Tracking::onStopped));
 	}
 
 	/**

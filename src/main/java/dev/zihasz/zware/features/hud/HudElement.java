@@ -1,6 +1,5 @@
 package dev.zihasz.zware.features.hud;
 
-import dev.zihasz.zware.ZWare;
 import dev.zihasz.zware.features.Feature;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -13,7 +12,6 @@ public abstract class HudElement extends Feature {
 		super(name, description);
 		this.x = defaultX;
 		this.y = defaultY;
-		ZWare.BUS.register(this);
 	}
 
 	public void enable() {
@@ -24,15 +22,14 @@ public abstract class HudElement extends Feature {
 	public void disable() {
 		this.enabled = false;
 		this.onDisable();
-		MinecraftForge.EVENT_BUS.register(this);
+		MinecraftForge.EVENT_BUS.unregister(this);
 	}
 	public void toggle() {
 		if (enabled) disable();
 		else enable();
-		MinecraftForge.EVENT_BUS.unregister(this);
 	}
 
-	public void onRender2D() {}
+	public void draw() {}
 
 	public void onEnable() {}
 	public void onDisable() {}

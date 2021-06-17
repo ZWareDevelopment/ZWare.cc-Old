@@ -1,6 +1,5 @@
 package dev.zihasz.zware.features.module.render;
 
-import dev.xdark.ssbus.Listener;
 import dev.zihasz.zware.event.events.PacketEvent;
 import dev.zihasz.zware.features.module.Category;
 import dev.zihasz.zware.features.module.Module;
@@ -10,6 +9,7 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.CPacketAnimation;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumHand;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class Animations extends Module {
 
@@ -50,7 +50,7 @@ public class Animations extends Module {
 		}
 	}
 
-	@Listener
+	@SubscribeEvent
 	public void onPacketSend(PacketEvent.Send event) {
 		Packet<?> raw = event.getPacket();
 		if (raw instanceof CPacketAnimation) {

@@ -1,11 +1,13 @@
 package dev.zihasz.zware.ui.clickgui.component.button;
 
 import dev.zihasz.zware.features.module.Module;
+import dev.zihasz.zware.ui.colors.Dracula;
 import dev.zihasz.zware.utils.render.ColorScheme;
 import dev.zihasz.zware.utils.render.Renderer2D;
 import dev.zihasz.zware.utils.render.TextRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.util.ChatAllowedCharacters;
 import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.input.Keyboard;
 
@@ -30,6 +32,9 @@ public class ModuleComponent extends Button {
 						(module.isEnabled() ? this.colorScheme.foreground : this.colorScheme.background)
 		);
 		TextRenderer.drawCenteredString(this.getModuleName(), this.x, this.y, this.width, this.height, match(this.getModuleName(), search) ? this.colorScheme.font : this.colorScheme.font.darker(), true);
+
+		if (hovered(x, y))
+			TextRenderer.drawString(module.getDescription(), x + 2, y - (TextRenderer.getFontHeight() + 2) , colorScheme.font.darker());
 
 		if (!search.equals("")) {
 			TextRenderer.drawString(search, (sr.getScaledWidth() / 2f) - (TextRenderer.getStringWidth(search) / 2), 2, colorScheme.font);
@@ -56,8 +61,9 @@ public class ModuleComponent extends Button {
 		if (code != Keyboard.KEY_NONE) {
 			if (code == Keyboard.KEY_DELETE) search = "";
 			else if (code == Keyboard.KEY_BACK && !search.equals("")) search = search.substring(0, search.length() - 1);
+			else if (code == Keyboard.KEY_BACK) return;
 			else if (code == Keyboard.KEY_RETURN) search = "";
-			else search += character;
+			else if (ChatAllowedCharacters.isAllowedCharacter(character)) search += character;
 		}
 	}
 

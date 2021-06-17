@@ -33,15 +33,15 @@ public class BetterOffhand extends Module {
 				int gapple = InventoryUtils.findInventory(Items.GOLDEN_APPLE);
 
 				if (right.getValue() && mc.gameSettings.keyBindUseItem.isKeyDown() && mc.player.getHeldItemMainhand().getItem() == Items.DIAMOND_SWORD) {
-					InventoryUtils.switchOffhand(gapple, 0);
+					InventoryUtils.switchOffhand(gapple);
 				} else {
-					InventoryUtils.switchOffhand(slot, 0);
+					InventoryUtils.switchOffhand(slot);
 				}
 			} else {
 				if (mc.player.getHeldItemOffhand().getItem() == Items.TOTEM_OF_UNDYING) return;
 
 				int totem = InventoryUtils.findInventory(Items.TOTEM_OF_UNDYING);
-				InventoryUtils.switchOffhand(totem, 0);
+				InventoryUtils.switchOffhand(totem);
 			}
 			timer.reset();
 		}

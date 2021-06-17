@@ -20,7 +20,7 @@ public class Watermark extends HudElement {
 	private final Rainbow rb = new Rainbow();
 
 	@Override
-	public void onRender2D() {
+	public void draw() {
 		mc.fontRenderer.drawString(
 				ZWare.MOD_NAME + (version.getValue() ? " " + ZWare.MOD_VERSION : ""),
 				this.x,

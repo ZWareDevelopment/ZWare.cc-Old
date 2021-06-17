@@ -1,6 +1,5 @@
 package dev.zihasz.zware.features.module.movement;
 
-import dev.xdark.ssbus.Listener;
 import dev.zihasz.zware.event.events.MoveEvent;
 import dev.zihasz.zware.features.module.Category;
 import dev.zihasz.zware.features.module.Module;
@@ -9,6 +8,7 @@ import dev.zihasz.zware.utils.entity.EntityUtils;
 import dev.zihasz.zware.utils.entity.TimerUtils;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 /**
  * @author zihasz
@@ -49,7 +49,7 @@ public class Strafe extends Module {
 		mc.player.moveStrafing *= strafeMp.getValue();
 	}
 
-	@Listener
+	@SubscribeEvent
 	public void onMove(MoveEvent event) {
 
 		if (timer.getValue()) {

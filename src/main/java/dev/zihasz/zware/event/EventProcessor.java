@@ -19,18 +19,18 @@ public class EventProcessor {
 
 	@SubscribeEvent
 	public void onTick(TickEvent.ClientTickEvent event) {
-		ModuleManager.getModules().stream().filter(Module::isEnabled).filter(module -> !module.nullCheck()).forEach(Module::onUpdate);
+		ModuleManager.getModules().stream().filter(Module::isEnabled).forEach(Module::onUpdate);
 	}
 
 	@SubscribeEvent
 	public void onRender(TickEvent.RenderTickEvent event) {
-		ModuleManager.getModules().stream().filter(Module::isEnabled).filter(module -> !module.nullCheck()).forEach(Module::onRender2D);
-		HUDManager.getElements().stream().filter(HudElement::isEnabled).filter(hudElement -> !hudElement.nullCheck()).forEach(HudElement::onRender2D);
+		ModuleManager.getModules().stream().filter(Module::isEnabled).forEach(Module::onRender2D);
+		HUDManager.getElements().stream().filter(HudElement::isEnabled).filter(hudElement -> !hudElement.nullCheck()).forEach(HudElement::draw);
 	}
 
 	@SubscribeEvent
 	public void onWorldRender(RenderWorldLastEvent event) {
-		ModuleManager.getModules().stream().filter(Module::isEnabled).filter(module -> !module.nullCheck()).forEach(module -> module.onRender3D(event));
+		ModuleManager.getModules().stream().filter(Module::isEnabled).forEach(module -> module.onRender3D(event));
 	}
 
 	@SubscribeEvent

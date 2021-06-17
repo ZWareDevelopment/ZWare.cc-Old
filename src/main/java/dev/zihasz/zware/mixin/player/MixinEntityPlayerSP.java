@@ -9,6 +9,7 @@ import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.MoverType;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -25,7 +26,7 @@ public class MixinEntityPlayerSP extends AbstractClientPlayer {
 	@Inject(method = "onUpdateWalkingPlayer", at = @At("HEAD"), cancellable = true)
 	public void onUpdateWalkingPlayer(CallbackInfo info) {
 		UpdateWalkingPlayerEvent event = new UpdateWalkingPlayerEvent(EventState.PRE);
-		ZWare.BUS.unsafeFireAndForget(event);
+		MinecraftForge.EVENT_BUS.post(event);
 
 		if (event.isCanceled())
 			info.cancel();
@@ -34,7 +35,7 @@ public class MixinEntityPlayerSP extends AbstractClientPlayer {
 	@Redirect(method = "move", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/entity/AbstractClientPlayer;move(Lnet/minecraft/entity/MoverType;DDD)V"))
 	public void move(AbstractClientPlayer player, MoverType type, double x, double y, double z) {
 		MoveEvent event = new MoveEvent(EventState.PRE, type, x, y, z);
-		ZWare.BUS.unsafeFireAndForget(event);
+		MinecraftForge.EVENT_BUS.post(event);
 
 		if (!event.isCanceled())
 			super.move(type, x, y, z);

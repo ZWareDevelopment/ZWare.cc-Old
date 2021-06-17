@@ -19,6 +19,7 @@ public class FakePlayer extends Module {
 
 	@Override
 	public void onEnable() {
+		if (nullCheck()) return;
 		GameProfile profile = new GameProfile(UUID.fromString("7c42a18c-659f-4f49-876e-5c065e50b86d"), "06d");
 		player = new EntityOtherPlayerMP(mc.world, profile);
 		player.copyLocationAndAnglesFrom(mc.player);
@@ -28,11 +29,13 @@ public class FakePlayer extends Module {
 
 	@Override
 	public void onUpdate() {
+		if (nullCheck()) return;
 		player.inventory = mc.player.inventory;
 	}
 
 	@Override
 	public void onDisable() {
+		if (nullCheck()) return;
 		mc.world.removeEntityFromWorld(entityId);
 	}
 

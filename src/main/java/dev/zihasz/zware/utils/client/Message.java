@@ -18,6 +18,9 @@ public class Message implements Util {
 	public static void sendInfoMessage(String message) {
 		Message.sendClientMessage(ChatFormatting.AQUA + message);
 	}
+	public static void sendLogMessage(String message) {
+		Message.sendClientMessage(ChatFormatting.LIGHT_PURPLE + message);
+	}
 	public static void sendSuccessMessage(String message) {
 		Message.sendClientMessage(ChatFormatting.GREEN + message);
 	}

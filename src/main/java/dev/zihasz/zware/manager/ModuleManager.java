@@ -23,8 +23,6 @@ public class ModuleManager {
 				this.addModule((Module) moduleClass.newInstance());
 			} catch (Exception ignored) {}
 		});
-
-		modules.forEach(module -> ZWare.BUS.register(module.getClass()));
 	}
 
 	private void addModule(Module module) {

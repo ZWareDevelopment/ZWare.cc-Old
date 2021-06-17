@@ -3,14 +3,12 @@ package dev.zihasz.zware.security;
 import dev.zihasz.zware.security.auth.HWID;
 import dev.zihasz.zware.utils.Util;
 import dev.zihasz.zware.utils.networking.RequestUtils;
-import dev.zihasz.zware.utils.networking.useragent.UserAgentBuilder;
 
 import java.io.IOException;
 
 public class Tracking implements Util {
 
-	private static String trackingUrl = "https://api.zware.cc/tracking";
-	private static UserAgentBuilder builder = new UserAgentBuilder();
+	private static String trackingUrl = "https://localhost:1337/tracking";
 
 	public static void onStarted() {
 		try {
@@ -33,13 +31,20 @@ public class Tracking implements Util {
 		String hwid = HWID.getHWID();
 
 		String act = action.toString().toLowerCase();
-		String json = String.format("{ \"action\": \"%s\", \"mc\": \"%s\", \"pc\": \"%s\", \"hwid\": \"%s\" }",
+		String json = String.format(
+				"{ " +
+						"\"action\": \"%s\", " +
+						"\"mc_username\": \"%s\", " +
+						"\"pc_username\": \"%s\", " +
+						"\"hwid\": \"%s\" " +
+				"}",
+				act,
 				mc_username,
 				pc_username,
-				hwid,
-				act);
+				hwid
+		);
 
-		RequestUtils.postJson(trackingUrl, json, builder.build().toString());
+		RequestUtils.postJson(trackingUrl, json);
 	}
 
 	private enum Action {

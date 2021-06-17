@@ -48,14 +48,11 @@ dependencies {
     }
     compile('org.reflections:reflections:0.9.11') { exclude group: 'com.google.guava', module: 'guava' }
     compile group: 'net.jodah', name: 'typetools', version: '0.5.0'
-    compile group: 'com.github.xxDark', name: 'ssbus', version: '-SNAPSHOT'
+    // compile group: 'com.github.xxDark', name: 'ssbus', version: '-SNAPSHOT'
     compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
     compile group: 'club.minnced', name: 'java-discord-rpc', version: '2.0.1'
     compile group: 'com.github.oshi', name: 'oshi-core', version: '5.7.2'
     compile 'com.github.zihasz:sec4j:1.0.0'
-
-    compile('com.lukflug:panelstudio:0.1.11')
-    compile('com.lukflug:panelstudio-mc12:0.1.8')
 }
 
 processResources {
@@ -77,14 +74,12 @@ shadowJar {
         include(dependency('org.spongepowered:mixin'))
         include(dependency('org.reflections:reflections'))
         include(dependency('net.jodah:typetools'))
-        include(dependency('com.github.xxDark:ssbus'))
+        // include(dependency('com.github.xxDark:ssbus'))
         include(dependency('com.googlecode.json-simple:json-simple'))
         include(dependency('club.minnced:java-discord-rpc'))
         include(dependency('org.javassist:javassist'))
         include(dependency('com.github.oshi:oshi-core'))
         include(dependency('com.github.zihasz:sec4j'))
-        include(dependency('com.lukflug:panelstudio'))
-        include(dependency('com.lukflug:panelstudio-mc12'))
     }
     exclude 'dummyThing'
     exclude 'LICENSE.txt'

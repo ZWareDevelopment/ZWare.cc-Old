@@ -1,6 +1,5 @@
 package dev.zihasz.zware.features.module.combat;
 
-import dev.xdark.ssbus.Listener;
 import dev.zihasz.zware.event.events.PacketEvent;
 import dev.zihasz.zware.features.module.Category;
 import dev.zihasz.zware.features.module.Module;
@@ -180,7 +179,7 @@ public class CrystalAura extends Module {
 		}
 	}
 
-	@Listener
+	@SubscribeEvent
 	public void onPacketRead(PacketEvent.Read event) {
 		Packet<?> rawPacket = event.getPacket();
 		// Sound sync
@@ -206,7 +205,7 @@ public class CrystalAura extends Module {
 		}
 	}
 
-	@Listener
+	@SubscribeEvent
 	public void onPacketSend(PacketEvent.Send event) {
 		Packet<?> rawPacket = event.getPacket();
 		// Instant sync

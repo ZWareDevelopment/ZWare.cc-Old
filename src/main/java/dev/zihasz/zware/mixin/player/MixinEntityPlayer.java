@@ -6,6 +6,7 @@ import dev.zihasz.zware.event.events.WaterPushEvent;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -21,7 +22,7 @@ public abstract class MixinEntityPlayer extends EntityLivingBase {
 	@Inject(method = "isPushedByWater()Z", at = @At("HEAD"), cancellable = true)
 	public void onPushedByWater(CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
 		WaterPushEvent event = new WaterPushEvent(EventState.PRE);
-		ZWare.BUS.unsafeFireAndForget(event);
+		MinecraftForge.EVENT_BUS.post(event);
 		if (event.isCanceled()) callbackInfoReturnable.setReturnValue(false);
 	}
 

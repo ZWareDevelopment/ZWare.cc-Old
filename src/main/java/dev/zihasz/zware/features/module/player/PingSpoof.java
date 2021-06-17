@@ -1,6 +1,5 @@
 package dev.zihasz.zware.features.module.player;
 
-import dev.xdark.ssbus.Listener;
 import dev.zihasz.zware.event.events.PacketEvent;
 import dev.zihasz.zware.features.module.Category;
 import dev.zihasz.zware.features.module.Module;
@@ -8,6 +7,7 @@ import dev.zihasz.zware.features.setting.Setting;
 import dev.zihasz.zware.utils.misc.Timer;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.CPacketKeepAlive;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -38,7 +38,7 @@ public class PingSpoof extends Module {
 		this.clearQueue();
 	}
 
-	@Listener
+	@SubscribeEvent
 	public void onPacketSend(PacketEvent.Send event) {
 		if (this.receive && mc.player != null && !mc.isSingleplayer() && mc.player.isEntityAlive() && event.getPacket() instanceof CPacketKeepAlive) {
 			this.packets.add(event.getPacket());

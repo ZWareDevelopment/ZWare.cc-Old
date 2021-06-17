@@ -1,9 +1,8 @@
 package dev.zihasz.zware.event;
 
-public abstract class Event {
+public abstract class Event extends net.minecraftforge.fml.common.eventhandler.Event {
 
 	private final EventState state;
-	private boolean canceled = false;
 
 	public Event(EventState state) {
 		this.state = state;
@@ -17,11 +16,4 @@ public abstract class Event {
 		setCanceled(true);
 	}
 
-	public boolean isCanceled() {
-		return canceled;
-	}
-
-	public void setCanceled(boolean canceled) {
-		this.canceled = canceled;
-	}
 }

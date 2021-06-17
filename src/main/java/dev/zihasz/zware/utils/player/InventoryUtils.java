@@ -107,20 +107,12 @@ public class InventoryUtils implements Util {
 		if (!packet) mc.player.inventory.currentItem = slot;
 		if (updateController) mc.playerController.updateController();
 	}
-	public static void switchOffhand(int slot, int step) {
+	public static void switchOffhand(int slot) {
 		if (slot == -1) return;
-		if (step == 0) {
-			mc.playerController.windowClick(0, slot, 0, ClickType.PICKUP, mc.player);
-			mc.playerController.windowClick(0, 45, 0, ClickType.PICKUP, mc.player);
-			mc.playerController.windowClick(0, slot, 0, ClickType.PICKUP, mc.player);
-		}
-		if (step == 1) {
-			mc.playerController.windowClick(0, slot, 0, ClickType.PICKUP, mc.player);
-		}
-		if (step == 2) {
-			mc.playerController.windowClick(0, 45, 0, ClickType.PICKUP, mc.player);
-			mc.playerController.windowClick(0, slot, 0, ClickType.PICKUP, mc.player);
-		}
+
+		mc.playerController.windowClick(0, slot, 0, ClickType.PICKUP, mc.player);
+		mc.playerController.windowClick(0, 45, 0, ClickType.PICKUP, mc.player);
+		mc.playerController.windowClick(0, slot, 0, ClickType.PICKUP, mc.player);
 
 		mc.playerController.updateController();
 	}

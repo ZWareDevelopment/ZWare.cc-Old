@@ -35,21 +35,22 @@ public abstract class Module extends Feature {
 	public Module(String name, Category category)                               { this(name, "", category); }
 
 	public void enable() {
+		if (nullCheck()) return;
 		this.enabled = true;
 		onEnable();
 		MinecraftForge.EVENT_BUS.register(this);
-		ZWare.BUS.unsafeFireAndForget(new ModuleEvent.Enable(EventState.POST, this));
+		MinecraftForge.EVENT_BUS.post(new ModuleEvent.Enable(EventState.POST, this));
 	}
 	public void disable() {
+		if (nullCheck()) return;
 		this.enabled = false;
 		onDisable();
+		MinecraftForge.EVENT_BUS.post(new ModuleEvent.Enable(EventState.POST, this));
 		MinecraftForge.EVENT_BUS.unregister(this);
-		ZWare.BUS.unsafeFireAndForget(new ModuleEvent.Enable(EventState.POST, this));
 	}
 	public void toggle() {
 		if (enabled) disable();
 		else enable();
-		MinecraftForge.EVENT_BUS.unregister(this);
 	}
 
 	public String getInfo() { return ""; }

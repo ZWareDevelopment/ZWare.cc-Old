@@ -1,6 +1,5 @@
 package dev.zihasz.zware.features.module.render;
 
-import dev.xdark.ssbus.Listener;
 import dev.zihasz.zware.event.events.TransformEvent;
 import dev.zihasz.zware.features.module.Category;
 import dev.zihasz.zware.features.module.Module;
@@ -8,6 +7,7 @@ import dev.zihasz.zware.features.setting.Setting;
 import dev.zihasz.zware.features.setting.SubSetting;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.EnumHandSide;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ViewModel extends Module {
 
@@ -41,7 +41,7 @@ public class ViewModel extends Module {
 	private final SubSetting<Float> ohRotateY = new SubSetting<>(offhand,"OHRotateY", "Rotates your offhand on the Y axis", 0f, -10f, 10f);
 	private final SubSetting<Float> ohRotateZ = new SubSetting<>(offhand,"OHRotateZ", "Rotates your offhand on the Z axis", 0f, -10f, 10f);
 
-	@Listener
+	@SubscribeEvent
 	public void onTransformSide(TransformEvent.FirstPerson.Side event) {
 		if (mainhand.getValue() && event.getHandSide() == EnumHandSide.RIGHT) {
 			GlStateManager.translate(mhOffsetX.getValue(), mhOffsetY.getValue(), mhOffsetZ.getValue());
@@ -55,7 +55,7 @@ public class ViewModel extends Module {
 		}
 	}
 
-	@Listener
+	@SubscribeEvent
 	public void onTransformEat(TransformEvent.FirstPerson.Eat event) {
 		if (noEat.getValue())
 			event.cancel();

@@ -1,11 +1,11 @@
 package dev.zihasz.zware.features.module.movement;
 
-import dev.xdark.ssbus.Listener;
 import dev.zihasz.zware.event.events.PacketEvent;
 import dev.zihasz.zware.features.module.Category;
 import dev.zihasz.zware.features.module.Module;
 import dev.zihasz.zware.features.setting.Setting;
 import net.minecraft.network.play.client.CPacketPlayer;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class Fly extends Module {
 
@@ -31,7 +31,7 @@ public class Fly extends Module {
 		mc.player.capabilities.isFlying = false;
 	}
 
-	@Listener
+	@SubscribeEvent
 	public void onPacketSend(PacketEvent.Send event) {
 		if (event.getPacket() instanceof CPacketPlayer) {
 			((CPacketPlayer) event.getPacket()).onGround = true;

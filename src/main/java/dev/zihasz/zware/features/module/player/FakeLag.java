@@ -1,6 +1,5 @@
 package dev.zihasz.zware.features.module.player;
 
-import dev.xdark.ssbus.Listener;
 import dev.zihasz.zware.event.events.PacketEvent;
 import dev.zihasz.zware.features.module.Category;
 import dev.zihasz.zware.features.module.Module;
@@ -8,6 +7,7 @@ import dev.zihasz.zware.features.setting.Setting;
 import dev.zihasz.zware.features.setting.SubSetting;
 import dev.zihasz.zware.utils.misc.Timer;
 import net.minecraft.network.Packet;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.util.Objects;
 import java.util.Queue;
@@ -49,7 +49,7 @@ public class FakeLag extends Module {
 		}
 	}
 
-	@Listener
+	@SubscribeEvent
 	public void onPacketEvent(PacketEvent.Send event) {
 		if (outgoing.getValue()) {
 			event.cancel();
@@ -57,7 +57,7 @@ public class FakeLag extends Module {
 		}
 	}
 
-	@Listener
+	@SubscribeEvent
 	public void onPacketEvent(PacketEvent.Read event) {
 		if (incoming.getValue()) {
 			event.cancel();
