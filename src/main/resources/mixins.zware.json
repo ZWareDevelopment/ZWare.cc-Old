@@ -7,7 +7,6 @@
   "mixins": [
 	"entity.MixinEntity",
 	"network.MixinC00Handshake",
-	"network.MixinNetHandlerPlayClient",
 	"network.MixinNetworkManager",
 	"player.MixinAbstractClientPlayer",
 	"player.MixinEntityPlayer",
