@@ -45,9 +45,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
-/*
-	TODO: FacePlace, ArmorBreaker.
- */
+// TODO: Face placing and armor breaker.
+// TODO: Target render
 
 public class CrystalAura extends Module {
 

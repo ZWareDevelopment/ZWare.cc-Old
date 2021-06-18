@@ -17,9 +17,10 @@ import java.util.stream.Collectors;
 
 public class Frame extends Panel {
 
-	private Category category;
-	private List<Button> buttons = new ArrayList<>();
+	private final Category category;
+	private final List<Button> buttons = new ArrayList<>();
 	private boolean expanded = true;
+	public int buttonOffset = 0;
 
 	public Frame(Category category, int x, int y, int width, int height, ColorScheme colorScheme) {
 		super(x, y, width, height, colorScheme);
@@ -27,7 +28,7 @@ public class Frame extends Panel {
 
 		int offsetY = height;
 		for (Module module : ModuleManager.getModules(category).stream().sorted(Comparator.comparing(Module::getName)).collect(Collectors.toList())) {
-			buttons.add(new ModuleComponent(x, y + offsetY, width, height, colorScheme, module));
+			buttons.add(new ModuleComponent(this,x, y + offsetY, width, height, colorScheme, module));
 			offsetY += height;
 		}
 	}
@@ -37,7 +38,11 @@ public class Frame extends Panel {
 		Renderer2D.drawRect(this.x, this.y, this.x + this.width, this.y + this.height, this.colorScheme.foreground);
 		TextRenderer.drawCenteredString(this.getCategoryName(), this.x, this.y, this.width, this.height, this.colorScheme.font, true);
 
-		if (expanded) buttons.forEach(b -> b.draw(x, y));
+		if (expanded)
+			for (Button button : buttons) {
+				button.buttonOffset = this.buttonOffset;
+				button.draw(x, y);
+			}
 	}
 
 	@Override

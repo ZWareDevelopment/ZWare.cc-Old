@@ -4,10 +4,8 @@ import dev.zihasz.zware.event.events.PacketEvent;
 import dev.zihasz.zware.features.module.Category;
 import dev.zihasz.zware.features.module.Module;
 import dev.zihasz.zware.manager.ModuleManager;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
+import dev.zihasz.zware.utils.networking.PacketUtils;
 import net.minecraft.network.Packet;
-import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.client.CPacketCustomPayload;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -28,9 +26,7 @@ public class FakeLunar extends Module {
 		if(raw instanceof CPacketCustomPayload) {
 			CPacketCustomPayload packet = (CPacketCustomPayload) raw;
 			if(packet.getChannelName().equalsIgnoreCase("MC|Brand")) {
-				ByteBuf message = Unpooled.buffer();
-				message.writeBytes("Lunar-Client".getBytes());
-				mc.player.connection.sendPacket(new CPacketCustomPayload("REGISTER", new PacketBuffer(message)));
+				mc.player.connection.sendPacket(PacketUtils.generatePayload("REGISTER", "Lunar-Client"));
 			}
 		}
 	}

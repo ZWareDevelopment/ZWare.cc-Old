@@ -7,8 +7,11 @@ public abstract class Button implements Component {
 
 	public int x, y, width, height;
 	public ColorScheme colorScheme;
+	public int buttonOffset = 0;
+	public Component parent;
 
-	public Button(int x, int y, int width, int height, ColorScheme colorScheme) {
+	public Button(Component parent, int x, int y, int width, int height, ColorScheme colorScheme) {
+		this.parent = parent;
 		this.x = x;
 		this.y = y;
 		this.width = width;

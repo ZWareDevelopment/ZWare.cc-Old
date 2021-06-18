@@ -1,6 +1,7 @@
 package dev.zihasz.zware.ui.clickgui.component.button.setting.bool;
 
 import dev.zihasz.zware.features.setting.Setting;
+import dev.zihasz.zware.ui.clickgui.component.button.ModuleComponent;
 import dev.zihasz.zware.ui.clickgui.component.button.setting.SettingComponent;
 import dev.zihasz.zware.utils.render.ColorScheme;
 import dev.zihasz.zware.utils.render.Renderer2D;
@@ -8,8 +9,8 @@ import dev.zihasz.zware.utils.render.TextRenderer;
 
 public class BooleanComponent extends SettingComponent<Boolean> {
 
-	public BooleanComponent(Setting<Boolean> setting, int x, int y, int width, int height, ColorScheme colorScheme) {
-		super(setting, x, y, width, height, colorScheme);
+	public BooleanComponent(ModuleComponent parent, Setting<Boolean> setting, int x, int y, int width, int height, ColorScheme colorScheme) {
+		super(parent, setting, x, y, width, height, colorScheme);
 	}
 
 	@Override
