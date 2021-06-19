@@ -17,7 +17,7 @@ public class ZWare {
 
 	public static final String MOD_ID = "zware";
 	public static final String MOD_NAME = "ZWare.cc";
-	public static final String MOD_VERSION = "1.0.1";
+	public static final String MOD_VERSION = "1.2.3";
 	public static final String MOD_VERSION_PREFIX = "v";
 
 	public static final Logger LOGGER = LogManager.getLogger(MOD_NAME);

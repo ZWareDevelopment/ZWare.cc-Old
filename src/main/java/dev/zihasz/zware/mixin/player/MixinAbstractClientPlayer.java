@@ -24,16 +24,16 @@ public abstract class MixinAbstractClientPlayer extends EntityPlayer {
 		super(worldIn, gameProfileIn);
 	}
 
-	@Shadow @Nullable
-	protected abstract NetworkPlayerInfo getPlayerInfo();
+	// @Shadow @Nullable
+	// protected abstract NetworkPlayerInfo getPlayerInfo();
 
 	@Inject(method = "getLocationCape()Lnet/minecraft/util/ResourceLocation;", at = @At(value = "RETURN"), cancellable = true)
 	public void getCape(CallbackInfoReturnable<ResourceLocation> cir) {
-		UUID uuid = Objects.requireNonNull(getPlayerInfo()).getGameProfile().getId();
+		//UUID uuid = Objects.requireNonNull(getPlayerInfo()).getGameProfile().getId();
 
-		if (ZWare.capeManager.hasCape(uuid)) {
-			cir.setReturnValue(ZWare.capeManager.getCapeForUUID(uuid));
-		}
+		//if (ZWare.capeManager.hasCape(uuid)) {
+		//	cir.setReturnValue(ZWare.capeManager.getCapeForUUID(uuid));
+		//}
 	}
 
 }

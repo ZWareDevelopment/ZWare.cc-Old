@@ -16,4 +16,8 @@ public abstract class Event extends net.minecraftforge.fml.common.eventhandler.E
 		setCanceled(true);
 	}
 
+	@Override
+	public boolean isCancelable() {
+		return true;
+	}
 }
