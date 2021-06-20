@@ -7,6 +7,7 @@ import net.minecraft.util.math.Vec3d;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Collection;
 import java.util.Random;
 
 public class MathUtils implements Util {
@@ -75,6 +76,7 @@ public class MathUtils implements Util {
 		final double[] calc = calc2d(p, d1);
 		return new Vec3d(calc[0], 0, calc[1]);
 	}
+
 	public static double[] calc2d(float p, float dist) {
 		final double x = dist * (Math.cos(Math.toRadians(p)));
 		final double y = dist * (Math.sin(Math.toRadians(p)));
@@ -190,7 +192,25 @@ public class MathUtils implements Util {
 
 	public static int randomIntBetween(int min, int max) {
 		Random r = new Random();
-		return r.nextInt(max-min) + min;
+		return r.nextInt(max - min) + min;
+	}
+
+	public static double doubleAndAdd(double x, double y, double z) {
+		return x * x + y * y + z * z;
+	}
+
+	private double average(Collection<Double> collection) {
+		if (collection.isEmpty()) return 0.0;
+
+		double sum = 0.0;
+		int size = 0;
+
+		for (double element : collection) {
+			sum += element;
+			size++;
+		}
+
+		return sum / size;
 	}
 
 }

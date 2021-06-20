@@ -2,7 +2,7 @@ package dev.zihasz.zware.ui.rewrite.component.buttons.settings;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
 import dev.zihasz.zware.features.setting.Setting;
-import dev.zihasz.zware.ui.rewrite.ClickGUI;
+import dev.zihasz.zware.ui.rewrite.GuiClick;
 import dev.zihasz.zware.ui.rewrite.component.panel.Frame;
 import dev.zihasz.zware.ui.rewrite.component.buttons.ModuleComponent;
 import dev.zihasz.zware.utils.math.MathUtils;
@@ -23,8 +23,8 @@ public class NumberComponent extends SettingComponent<Number> {
 	public void render(int x, int y) {
 		drawBackground(x, y, false);
 		final Quad q = getQuad();
-		Renderer2D.drawRect(q.getX(), q.getY(), (float) (q.getX() + dragWidth + 1), q.getBottom(), hovered(x, y) ? ClickGUI.defaultScheme.background.brighter() : ClickGUI.defaultScheme.background.brighter().brighter());
-		TextRenderer.drawString(setting.getName() + ": " + ChatFormatting.WHITE + setting.getValue(), q.getX() + 3, q.getY() + (q.height() - TextRenderer.getFontHeight()) / 2, ClickGUI.defaultScheme.font);
+		Renderer2D.drawRect(q.getX(), q.getY(), (float) (q.getX() + dragWidth + 1), q.getBottom(), hovered(x, y) ? GuiClick.defaultScheme.background.brighter() : GuiClick.defaultScheme.background.brighter().brighter());
+		TextRenderer.drawString(setting.getName() + ": " + ChatFormatting.WHITE + setting.getValue(), q.getX() + 3, q.getY() + (q.height() - TextRenderer.getFontHeight()) / 2, GuiClick.defaultScheme.font);
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class NumberComponent extends SettingComponent<Number> {
 				setting.setValue(newValue);
 			}
 		} else if (hovered(x, y))
-			ClickGUI.hovered = this;
+			GuiClick.hovered = this;
 	}
 
 	@Override

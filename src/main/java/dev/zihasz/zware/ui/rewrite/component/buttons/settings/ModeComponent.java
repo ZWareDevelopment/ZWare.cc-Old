@@ -2,7 +2,7 @@ package dev.zihasz.zware.ui.rewrite.component.buttons.settings;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
 import dev.zihasz.zware.features.setting.Setting;
-import dev.zihasz.zware.ui.rewrite.ClickGUI;
+import dev.zihasz.zware.ui.rewrite.GuiClick;
 import dev.zihasz.zware.ui.rewrite.component.buttons.ModuleComponent;
 import dev.zihasz.zware.utils.render.TextRenderer;
 
@@ -15,13 +15,13 @@ public class ModeComponent extends SettingComponent<Enum<?>> {
 	@Override
 	public void render(int x, int y) {
 		drawBackground(x, y, false);
-		TextRenderer.drawString(setting.getName() + ": " + ChatFormatting.WHITE + setting.getValue(), getQuad().getX() + 3, getQuad().getY() + (getQuad().height() - TextRenderer.getFontHeight()) / 2, ClickGUI.defaultScheme.font);
+		TextRenderer.drawString(setting.getName() + ": " + ChatFormatting.WHITE + setting.getValue(), getQuad().getX() + 3, getQuad().getY() + (getQuad().height() - TextRenderer.getFontHeight()) / 2, GuiClick.defaultScheme.font);
 	}
 
 	@Override
 	public void update(int x, int y) {
 		if (hovered(x, y))
-			ClickGUI.hovered = this;
+			GuiClick.hovered = this;
 	}
 
 	@Override

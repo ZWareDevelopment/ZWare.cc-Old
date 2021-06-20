@@ -3,7 +3,7 @@ package dev.zihasz.zware.ui.rewrite.component.panel;
 import dev.zihasz.zware.features.module.Category;
 import dev.zihasz.zware.features.module.Module;
 import dev.zihasz.zware.manager.ModuleManager;
-import dev.zihasz.zware.ui.rewrite.ClickGUI;
+import dev.zihasz.zware.ui.rewrite.GuiClick;
 import dev.zihasz.zware.ui.rewrite.component.Component;
 import dev.zihasz.zware.ui.rewrite.component.buttons.ModuleComponent;
 import dev.zihasz.zware.utils.render.Quad;
@@ -44,8 +44,8 @@ public class Frame implements Component {
 				this.x + FRAME_WIDTH,
 				this.y + FRAME_HEIGHT,
 				(hovered(x, y) ?
-						ClickGUI.defaultScheme.foreground.brighter() :
-						ClickGUI.defaultScheme.foreground)
+						GuiClick.defaultScheme.foreground.brighter() :
+						GuiClick.defaultScheme.foreground)
 		);
 		TextRenderer.drawCenteredString(
 				getCategoryName(),
@@ -53,7 +53,7 @@ public class Frame implements Component {
 				this.y,
 				FRAME_WIDTH,
 				FRAME_HEIGHT,
-				ClickGUI.defaultScheme.font,
+				GuiClick.defaultScheme.font,
 				true
 		);
 		offset = 0;

@@ -13,7 +13,7 @@ public class Watermark extends HudElement {
 		super("Watermark", "Draws an element with the client name and optionally the version on screen.", 5, 5);
 	}
 
-	private Setting<Color> color = new Setting<>("Color", "The color to draw the watermark in.", new Color(0x98ff98ff));
+	private Setting<Color> color = new Setting<>("Color", "The color to draw the watermark in.", new Color(0xff98ff98));
 	private Setting<Boolean> rainbow = new Setting<>("Rainbot", "Draw the text in rainbow.", true);
 	private Setting<Boolean> version = new Setting<>("Version", "Draw the version number after the client name", true);
 

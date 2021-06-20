@@ -2,7 +2,7 @@ package dev.zihasz.zware.ui.rewrite.component.buttons;
 
 import dev.zihasz.zware.features.module.Module;
 import dev.zihasz.zware.features.setting.Setting;
-import dev.zihasz.zware.ui.rewrite.ClickGUI;
+import dev.zihasz.zware.ui.rewrite.GuiClick;
 import dev.zihasz.zware.ui.rewrite.component.Component;
 import dev.zihasz.zware.ui.rewrite.component.panel.Frame;
 import dev.zihasz.zware.ui.rewrite.component.buttons.settings.BooleanComponent;
@@ -58,8 +58,8 @@ public class ModuleComponent implements Component {
 				q.getRight(),
 				q.getBottom(),
 				mod.isEnabled() ?
-						(hovered(x, y) ? ClickGUI.defaultScheme.foreground.brighter() : ClickGUI.defaultScheme.foreground) :
-						(hovered(x, y) ? ClickGUI.defaultScheme.background.brighter() : ClickGUI.defaultScheme.background)
+						(hovered(x, y) ? GuiClick.defaultScheme.foreground.brighter() : GuiClick.defaultScheme.foreground) :
+						(hovered(x, y) ? GuiClick.defaultScheme.background.brighter() : GuiClick.defaultScheme.background)
 		);
 		TextRenderer.drawCenteredString(
 				getModuleName(),
@@ -67,19 +67,19 @@ public class ModuleComponent implements Component {
 				(int) q.getY(),
 				(int) q.width(),
 				(int) q.height(),
-				search.isEmpty() ? ClickGUI.defaultScheme.font : getModuleName().toLowerCase().contains(search.toLowerCase()) ? ClickGUI.defaultScheme.font : ClickGUI.defaultScheme.font.darker(),
+				search.isEmpty() ? GuiClick.defaultScheme.font : getModuleName().toLowerCase().contains(search.toLowerCase()) ? GuiClick.defaultScheme.font : GuiClick.defaultScheme.font.darker(),
 				true);
 
 		if (open) {
 			settings.forEach(e -> e.render(x, y));
-			Renderer2D.drawRect(q.getX(), q.getBottom(), q.getX() + 1, q.getY() + height(), ClickGUI.defaultScheme.foreground);
+			Renderer2D.drawRect(q.getX(), q.getBottom(), q.getX() + 1, q.getY() + height(), GuiClick.defaultScheme.foreground);
 		}
 	}
 
 	@Override
 	public void update(int x, int y) {
 		if (hovered(x, y))
-			ClickGUI.hovered = this;
+			GuiClick.hovered = this;
 
 		if (open)
 			settings.forEach(e -> e.update(x, y));

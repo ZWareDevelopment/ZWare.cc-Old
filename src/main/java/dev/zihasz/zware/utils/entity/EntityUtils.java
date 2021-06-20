@@ -1,6 +1,7 @@
 package dev.zihasz.zware.utils.entity;
 
 import dev.zihasz.zware.utils.Util;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -122,6 +123,14 @@ public class EntityUtils implements Util {
 
 	public static boolean isBurrowed(Entity entity) {
 		return !mc.world.getBlockState(entity.getPosition()).getBlock().isPassable(mc.world, entity.getPosition());
+	}
+
+	public static double calcSpeed(EntityPlayerSP player) {
+		double tps = 1000.0 / mc.timer.tickLength;
+		double xDiff = player.posX - player.prevPosX;
+		double zDiff = player.posZ - player.prevPosZ;
+
+		return Math.hypot(xDiff, zDiff) * tps;
 	}
 
 }

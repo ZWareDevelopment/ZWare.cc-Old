@@ -1,7 +1,7 @@
 package dev.zihasz.zware.ui.rewrite.component.buttons.settings;
 
 import dev.zihasz.zware.features.setting.Setting;
-import dev.zihasz.zware.ui.rewrite.ClickGUI;
+import dev.zihasz.zware.ui.rewrite.GuiClick;
 import dev.zihasz.zware.ui.rewrite.component.panel.Frame;
 import dev.zihasz.zware.ui.rewrite.component.Component;
 import dev.zihasz.zware.ui.rewrite.component.buttons.ModuleComponent;
@@ -28,7 +28,7 @@ public abstract class SettingComponent<T> implements Component {
 				q.getY(),
 				q.getRight(),
 				q.getBottom(),
-				bright ? (hovered(x, y) ? ClickGUI.defaultScheme.background.brighter() : ClickGUI.defaultScheme.background).brighter() : hovered(x, y) ? ClickGUI.defaultScheme.background.brighter() : ClickGUI.defaultScheme.background
+				bright ? (hovered(x, y) ? GuiClick.defaultScheme.background.brighter() : GuiClick.defaultScheme.background).brighter() : hovered(x, y) ? GuiClick.defaultScheme.background.brighter() : GuiClick.defaultScheme.background
 		);
 	}
 

@@ -36,11 +36,9 @@ public class EventProcessor {
 	@SubscribeEvent
 	public void onKey(InputEvent.KeyInputEvent event) {
 		if (Keyboard.getEventKeyState()) {
-			if (Keyboard.getEventKey() != Keyboard.KEY_NONE) {
-				ModuleManager.getModules().stream()
-						.filter(module -> module.getBind() == Keyboard.getEventKey())
-						.forEach(Module::toggle);
-			}
+			ModuleManager.getModules().stream()
+					.filter(module -> module.getBind() == Keyboard.getEventKey())
+					.forEach(Module::toggle);
 		}
 	}
 

@@ -1,7 +1,7 @@
 package dev.zihasz.zware.ui.rewrite.component.buttons.settings;
 
 import dev.zihasz.zware.features.setting.Setting;
-import dev.zihasz.zware.ui.rewrite.ClickGUI;
+import dev.zihasz.zware.ui.rewrite.GuiClick;
 import dev.zihasz.zware.ui.rewrite.component.buttons.ModuleComponent;
 import dev.zihasz.zware.utils.render.TextRenderer;
 
@@ -13,13 +13,13 @@ public class BooleanComponent extends SettingComponent<Boolean> {
 	@Override
 	public void render(int x, int y) {
 		drawBackground(x, y, setting.getValue());
-		TextRenderer.drawString(setting.getName(), parent.getParent().getX() + 3, getQuad().getY() + (getQuad().height() - TextRenderer.getFontHeight()) / 2f, ClickGUI.defaultScheme.font);
+		TextRenderer.drawString(setting.getName(), parent.getParent().getX() + 3, getQuad().getY() + (getQuad().height() - TextRenderer.getFontHeight()) / 2f, GuiClick.defaultScheme.font);
 	}
 
 	@Override
 	public void update(int x, int y) {
 		if (hovered(x, y))
-			ClickGUI.hovered = this;
+			GuiClick.hovered = this;
 	}
 
 	@Override

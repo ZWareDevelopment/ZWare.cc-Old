@@ -7,19 +7,20 @@ import dev.zihasz.zware.ui.rewrite.component.Component;
 import dev.zihasz.zware.ui.rewrite.component.panel.Frame;
 import dev.zihasz.zware.utils.render.ColorScheme;
 import dev.zihasz.zware.utils.render.TextRenderer;
+import org.lwjgl.input.Keyboard;
 
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class ClickGUI extends GuiBase {
+public class GuiClick extends GuiBase {
 	public static final ColorScheme defaultScheme = new ColorScheme(new Color(0xff98ff98), new Color(0xff3f3f3f), new Color(0xfff3f3f3));
 	public static final int X_OFF_DEFAULT = 20;
 
 	public static Component hovered = null;
 	private final ArrayList<dev.zihasz.zware.ui.rewrite.component.panel.Frame> frames;
 
-	public ClickGUI() {
+	public GuiClick() {
 		this.frames = new ArrayList<>();
 
 		int x = X_OFF_DEFAULT;
@@ -52,6 +53,10 @@ public class ClickGUI extends GuiBase {
 
 	@Override
 	public void keyTyped(char typedChar, int keyCode) throws IOException {
+		if (keyCode == Keyboard.KEY_ESCAPE) {
+			mc.displayGuiScreen(null);
+			onGuiClosed();
+		}
 		frames.forEach(e -> e.keyTyped(typedChar, keyCode));
 	}
 
