@@ -3,11 +3,10 @@ package dev.zihasz.zware.ui.rewrite;
 import dev.zihasz.zware.features.module.Category;
 import dev.zihasz.zware.ui.base.GuiBase;
 import dev.zihasz.zware.ui.colors.Dracula;
+import dev.zihasz.zware.ui.rewrite.component.Component;
+import dev.zihasz.zware.ui.rewrite.component.panel.Frame;
 import dev.zihasz.zware.utils.render.ColorScheme;
 import dev.zihasz.zware.utils.render.TextRenderer;
-import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.util.ChatAllowedCharacters;
-import org.lwjgl.input.Keyboard;
 
 import java.awt.*;
 import java.io.IOException;
@@ -18,15 +17,15 @@ public class ClickGUI extends GuiBase {
 	public static final int X_OFF_DEFAULT = 20;
 
 	public static Component hovered = null;
-	private final ArrayList<Frame> frames;
+	private final ArrayList<dev.zihasz.zware.ui.rewrite.component.panel.Frame> frames;
 
 	public ClickGUI() {
 		this.frames = new ArrayList<>();
 
 		int x = X_OFF_DEFAULT;
 		for (Category c : Category.values()) {
-			frames.add(new Frame(x, 20, c));
-			x += Frame.FRAME_WIDTH + X_OFF_DEFAULT;
+			frames.add(new dev.zihasz.zware.ui.rewrite.component.panel.Frame(x, 20, c));
+			x += dev.zihasz.zware.ui.rewrite.component.panel.Frame.FRAME_WIDTH + X_OFF_DEFAULT;
 		}
 	}
 
@@ -63,7 +62,7 @@ public class ClickGUI extends GuiBase {
 
 	@Override
 	public void onGuiClosed() {
-		frames.forEach(Frame::guiClosed);
+		frames.forEach(dev.zihasz.zware.ui.rewrite.component.panel.Frame::guiClosed);
 	}
 
 	public ArrayList<Frame> getFrames() {

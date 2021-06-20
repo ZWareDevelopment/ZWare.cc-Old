@@ -1,9 +1,9 @@
-package dev.zihasz.zware.ui.rewrite.settings;
+package dev.zihasz.zware.ui.rewrite.component.buttons.settings;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
 import dev.zihasz.zware.features.setting.Setting;
 import dev.zihasz.zware.ui.rewrite.ClickGUI;
-import dev.zihasz.zware.ui.rewrite.ModuleComponent;
+import dev.zihasz.zware.ui.rewrite.component.buttons.ModuleComponent;
 import dev.zihasz.zware.utils.render.TextRenderer;
 
 public class ModeComponent extends SettingComponent<Enum<?>> {

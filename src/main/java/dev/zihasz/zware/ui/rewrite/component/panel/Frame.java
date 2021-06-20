@@ -1,8 +1,11 @@
-package dev.zihasz.zware.ui.rewrite;
+package dev.zihasz.zware.ui.rewrite.component.panel;
 
 import dev.zihasz.zware.features.module.Category;
 import dev.zihasz.zware.features.module.Module;
 import dev.zihasz.zware.manager.ModuleManager;
+import dev.zihasz.zware.ui.rewrite.ClickGUI;
+import dev.zihasz.zware.ui.rewrite.component.Component;
+import dev.zihasz.zware.ui.rewrite.component.buttons.ModuleComponent;
 import dev.zihasz.zware.utils.render.Quad;
 import dev.zihasz.zware.utils.render.Renderer2D;
 import dev.zihasz.zware.utils.render.TextRenderer;

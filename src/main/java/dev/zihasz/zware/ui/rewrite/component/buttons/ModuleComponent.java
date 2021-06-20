@@ -1,11 +1,14 @@
-package dev.zihasz.zware.ui.rewrite;
+package dev.zihasz.zware.ui.rewrite.component.buttons;
 
 import dev.zihasz.zware.features.module.Module;
 import dev.zihasz.zware.features.setting.Setting;
-import dev.zihasz.zware.ui.rewrite.settings.BooleanComponent;
-import dev.zihasz.zware.ui.rewrite.settings.ModeComponent;
-import dev.zihasz.zware.ui.rewrite.settings.NumberComponent;
-import dev.zihasz.zware.ui.rewrite.settings.SettingComponent;
+import dev.zihasz.zware.ui.rewrite.ClickGUI;
+import dev.zihasz.zware.ui.rewrite.component.Component;
+import dev.zihasz.zware.ui.rewrite.component.panel.Frame;
+import dev.zihasz.zware.ui.rewrite.component.buttons.settings.BooleanComponent;
+import dev.zihasz.zware.ui.rewrite.component.buttons.settings.ModeComponent;
+import dev.zihasz.zware.ui.rewrite.component.buttons.settings.NumberComponent;
+import dev.zihasz.zware.ui.rewrite.component.buttons.settings.SettingComponent;
 import dev.zihasz.zware.utils.render.Quad;
 import dev.zihasz.zware.utils.render.Renderer2D;
 import dev.zihasz.zware.utils.render.TextRenderer;
@@ -13,9 +16,7 @@ import net.minecraft.util.ChatAllowedCharacters;
 import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.input.Keyboard;
 
-import java.awt.*;
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class ModuleComponent implements Component {
 	public static final int MODULE_HEIGHT = 20;

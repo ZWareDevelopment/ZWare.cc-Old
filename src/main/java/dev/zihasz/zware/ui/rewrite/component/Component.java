@@ -1,4 +1,4 @@
-package dev.zihasz.zware.ui.rewrite;
+package dev.zihasz.zware.ui.rewrite.component;
 
 public interface Component {
 

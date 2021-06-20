@@ -1,10 +1,10 @@
-package dev.zihasz.zware.ui.rewrite.settings;
+package dev.zihasz.zware.ui.rewrite.component.buttons.settings;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
 import dev.zihasz.zware.features.setting.Setting;
 import dev.zihasz.zware.ui.rewrite.ClickGUI;
-import dev.zihasz.zware.ui.rewrite.Frame;
-import dev.zihasz.zware.ui.rewrite.ModuleComponent;
+import dev.zihasz.zware.ui.rewrite.component.panel.Frame;
+import dev.zihasz.zware.ui.rewrite.component.buttons.ModuleComponent;
 import dev.zihasz.zware.utils.math.MathUtils;
 import dev.zihasz.zware.utils.render.Quad;
 import dev.zihasz.zware.utils.render.Renderer2D;
