@@ -2,6 +2,7 @@ package dev.zihasz.zware.features.module.misc;
 
 import dev.zihasz.zware.features.module.Category;
 import dev.zihasz.zware.features.module.Module;
+import net.minecraft.world.GameType;
 
 public class ForceSurvival extends Module {
 
@@ -11,6 +12,6 @@ public class ForceSurvival extends Module {
 
 	@Override
 	public void onUpdate() {
-
+		mc.playerController.setGameType(GameType.SURVIVAL);
 	}
 }

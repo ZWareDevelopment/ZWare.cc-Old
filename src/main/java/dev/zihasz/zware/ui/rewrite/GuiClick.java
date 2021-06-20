@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class GuiClick extends GuiBase {
 	public static final ColorScheme defaultScheme = new ColorScheme(new Color(0xff98ff98), new Color(0xff3f3f3f), new Color(0xfff3f3f3));
-	public static final int X_OFF_DEFAULT = 20;
+	public static final int X_OFF_DEFAULT = 15;
 
 	public static Component hovered = null;
 	private final ArrayList<dev.zihasz.zware.ui.rewrite.component.panel.Frame> frames;
