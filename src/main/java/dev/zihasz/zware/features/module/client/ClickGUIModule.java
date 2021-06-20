@@ -4,6 +4,7 @@ import dev.zihasz.zware.features.module.Category;
 import dev.zihasz.zware.features.module.Module;
 import dev.zihasz.zware.features.setting.Setting;
 import dev.zihasz.zware.ui.clickgui.GuiClick;
+import dev.zihasz.zware.ui.rewrite.ClickGUI;
 import org.lwjgl.input.Keyboard;
 
 public class ClickGUIModule extends Module {
@@ -17,7 +18,7 @@ public class ClickGUIModule extends Module {
 	@Override
 	public void onEnable() {
 
-		mc.displayGuiScreen(new GuiClick());
+		mc.displayGuiScreen(new ClickGUI());
 		this.disable();
 
 	}

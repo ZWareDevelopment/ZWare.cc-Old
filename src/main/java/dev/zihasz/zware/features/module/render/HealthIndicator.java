@@ -47,7 +47,7 @@ public class HealthIndicator extends Module {
 	}
 
 	private float width() {
-		float w = width.getValue();
+		float w = 0;
 		if (pulseSetting.getValue()) {
 			switch (pulse.getValue()) {
 				case Simple:
