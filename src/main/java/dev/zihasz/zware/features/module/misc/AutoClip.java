@@ -5,7 +5,6 @@ import dev.zihasz.zware.features.module.Module;
 import dev.zihasz.zware.manager.RelationManager;
 import dev.zihasz.zware.utils.client.Message;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityEnderCrystal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
