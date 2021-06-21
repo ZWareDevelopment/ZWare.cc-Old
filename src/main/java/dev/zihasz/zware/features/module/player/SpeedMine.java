@@ -1,146 +1,139 @@
 package dev.zihasz.zware.features.module.player;
 
-import dev.zihasz.zware.event.EventState;
 import dev.zihasz.zware.event.events.BlockEvent;
 import dev.zihasz.zware.event.events.PacketEvent;
 import dev.zihasz.zware.features.module.Category;
 import dev.zihasz.zware.features.module.Module;
 import dev.zihasz.zware.features.setting.Setting;
 import dev.zihasz.zware.features.setting.SubSetting;
+import dev.zihasz.zware.utils.entity.EntityUtils;
+import dev.zihasz.zware.utils.misc.ColorUtils;
 import dev.zihasz.zware.utils.render.Renderer3D;
 import dev.zihasz.zware.utils.types.Pair;
 import dev.zihasz.zware.utils.world.WorldUtils;
 import net.minecraft.init.MobEffects;
 import net.minecraft.network.play.client.CPacketPlayerDigging;
+import net.minecraft.network.play.client.CPacketUseEntity;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.awt.*;
-import java.util.Objects;
+import java.text.DecimalFormat;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class SpeedMine extends Module {
 
-	private final Setting<Mode> mode = new Setting<>("Mode", "mode bruh", Mode.PACKET);
-	private final Setting<Float> startDamage = new Setting<>("DamageStart", "damage to start block at", 0.0f, 0f, 10f);
-	private final Setting<Float> endDamage = new Setting<>("DamageEnd", "damage to end block at", 0.7f, 0f, 10f);
-	private final Setting<Float> range = new Setting<>("Range", "Cancells block breaks if ur out of this range of cur block", 5f, 0f, 7f);
-	private final Setting<Boolean> cancelAbort = new Setting<>("NoAbort", "Cancel abort packets, might be buggy added this for funis", false);
-	private final Setting<Haste> haste = new Setting<>("Haste", "Option to add haste", Haste.TWO);
-	private final Setting<Boolean> renderSetting = new Setting<>("Render", "Render current target block", true);
-	private final SubSetting<Color> renderColor = new SubSetting<>(renderSetting, "Color", "Current target render color", new Color(255, 255, 255));
-	private final SubSetting<Float> renderWidth = new SubSetting<>(renderSetting, "OutlineWidth", "Outline width, set to 0 for no outline", 1f, 0f, 5f);
-	private final SubSetting<Boolean> renderDamage = new SubSetting<>(renderSetting, "Damage", "Render the block damage", true);
-	private final SubSetting<Boolean> renderQueue = new SubSetting<>(renderSetting, "Queue", "Render the queued blocks", true);
+	private final Setting<Mode> modeSetting = new Setting<>("Mode", "The speed mine mode.", Mode.PACKET);
+	private final Setting<Float> range = new Setting<>("Range", "Range to cancel breaking the block at.", 5f, 0f, 7f);
+	private final Setting<Float> startDamage = new Setting<>("StartDamage", "The damage to start breaking the block at.", 0f, 0f, 1f, v -> modeSetting.getValue() == Mode.DAMAGE);
+	private final Setting<Float> stopDamage = new Setting<>("StopDamage", "The damage to stop breaking the block at.", .7f, 0f, 1f, v -> modeSetting.getValue() == Mode.DAMAGE);
+	private final Setting<Boolean> queue = new Setting<>("Queue", "Block break queue. (like Meteor)", true, v -> modeSetting.getValue() == Mode.PACKET);
+	private final Setting<Integer> haste = new Setting<>("Haste", "Applies haste effect to make mining faster.", 1, 0, 2);
 
-	private BlockPos currentBlock;
-	private EnumFacing currentFace;
-	private Queue<Pair<BlockPos, EnumFacing>> breakQueue = new ConcurrentLinkedQueue<>();
+	private final Setting<Boolean> render = new Setting<>("Render", "Render the currently mined block", true);
+	private final SubSetting<Boolean> outline = new SubSetting<>(render, "Outline", "Outline the render block.", true, v -> render.getValue());
+	private final SubSetting<Color> outlineColor = new SubSetting<>(render, "Color", "The color of the outline.", new Color(255, 255, 255, 255), v -> outline.getValue());
+	private final SubSetting<Float> outlineWidth = new SubSetting<>(render, "Width", "The width of the outline.", 1f, 0f, 5f, v -> outline.getValue());
+	private final SubSetting<Boolean> fill = new SubSetting<>(render, "Fill", "Fill in the render block.", true, v -> render.getValue());
+	private final SubSetting<Color> fillColor = new SubSetting<>(render, "Color", "The color of the fill.", new Color(255, 255, 255, 80), v -> fill.getValue());
+	private final SubSetting<Boolean> renderQueue = new SubSetting<>(render, "RenderQueue", "Render the breaking queue's blocks.", true);
+	private final SubSetting<Boolean> renderDamage = new SubSetting<>(render, "RenderDamage", "Render the block damage.", true, v -> modeSetting.getValue() == Mode.DAMAGE);
+
+	private Pair<BlockPos, EnumFacing> block;
+	private Queue<Pair<BlockPos, EnumFacing>> blockQueue = new ConcurrentLinkedQueue<>();
+
 
 	public SpeedMine() {
-		super("SpeedMine", "Mine blocks at the speed of sound. Enjoy breaking the sound barrier! :)", Category.PLAYER);
-	}
-
-	@Override
-	public void onEnable() {
-		MinecraftForge.EVENT_BUS.register(this);
-		breakQueue = new ConcurrentLinkedQueue<>();
-		if (haste.getValue() != Haste.NONE)
-			mc.player.addPotionEffect(new PotionEffect(MobEffects.HASTE, 255000, haste.getValue() == Haste.ONE ? 1 : 2));
+		super("SpeedMine", "Mine blocks at the speed of sound. Enjoy breaking (haha pun :D) the sound barrier! :)", Category.PLAYER);
 	}
 
 	@Override
 	public void onDisable() {
-		MinecraftForge.EVENT_BUS.unregister(this);
+		block = null;
+		blockQueue.clear();
 	}
 
 	@Override
 	public void onUpdate() {
-		if (fullNullCheck()) return;
+		if (nullCheck()) return;
+		if (block == null) return;
 
-		if (currentBlock != null && mc.player.getDistanceSq(currentBlock) > range.getValue()) {
-			currentBlock = null;
-			currentFace = null;
-			mc.player.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.STOP_DESTROY_BLOCK, currentBlock, currentFace));
+		if (haste.getValue() != 0) {
+			mc.player.addPotionEffect(new PotionEffect(MobEffects.HASTE, 0, haste.getValue() - 1));
 		}
 
-		if (mode.getValue() == Mode.BREAKER && WorldUtils.canBreak(currentBlock) && !mc.world.isAirBlock(currentBlock)) {
-			mc.player.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.STOP_DESTROY_BLOCK, currentBlock, currentFace));
+		if (EntityUtils.getDistance(block.getKey()) > range.getValue()) {
+			mc.player.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.ABORT_DESTROY_BLOCK, block.getKey(), block.getVal()));
+			block = blockQueue.isEmpty() ? null : blockQueue.poll();
 		}
+
+		if (modeSetting.getValue() == Mode.BREAKER) {
+			mc.player.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.STOP_DESTROY_BLOCK, block.getKey(), block.getVal()));
+		}
+
 	}
 
 	@Override
 	public void onRender3D(RenderWorldLastEvent event) {
-		if (!renderSetting.getValue()) return;
-		Renderer3D.drawBBFill(new AxisAlignedBB(currentBlock), renderColor.getValue());
-		Renderer3D.drawBBOutline(new AxisAlignedBB(currentBlock), renderWidth.getValue(), renderColor.getValue());
-		if (renderDamage.getValue() && mode.getValue() != Mode.DAMAGE)
-			Renderer3D.drawTextFromBlock(mc.playerController.currentBlock, String.valueOf(mc.playerController.curBlockDamageMP), new Color(255, 255, 255, 255).getRGB(), 1f);
-		if (renderQueue.getValue() && !breakQueue.isEmpty()) {
-			for (Pair<BlockPos, EnumFacing> block : breakQueue) {
-				Color color = new Color(renderColor.getValue().getRed(), renderColor.getValue().getGreen(), renderColor.getValue().getBlue(), renderColor.getValue().getAlpha() / 2);
-				Renderer3D.drawBBFill(new AxisAlignedBB(currentBlock), color);
-				Renderer3D.drawBBOutline(new AxisAlignedBB(currentBlock), renderWidth.getValue(), color);
-			}
-		}
-	}
+		if (nullCheck()) return;
+		if (block == null) return;
 
-	@SubscribeEvent
-	public void onPacketSend(PacketEvent.Send event) {
-		if (!event.getState().equals(EventState.PRE)) return;
-		if (event.getPacket() instanceof CPacketPlayerDigging) {
-			CPacketPlayerDigging packet = (CPacketPlayerDigging) event.getPacket();
-			if (packet.getAction() == CPacketPlayerDigging.Action.ABORT_DESTROY_BLOCK && cancelAbort.getValue())
-				event.cancel();
+		if (render.getValue()) {
+			if (modeSetting.getValue() != Mode.DAMAGE) {
+				if (fill.getValue()) Renderer3D.drawBBFill(new AxisAlignedBB(block.getKey()), fillColor.getValue());
+				if (outline.getValue())
+					Renderer3D.drawBBOutline(new AxisAlignedBB(block.getKey()), outlineWidth.getValue(), outlineColor.getValue());
+			} else if (renderDamage.getValue()) {
+				Renderer3D.drawTextFromBlock(block.getKey(), new DecimalFormat("#.#").format(mc.playerController.curBlockDamageMP), 0xffffffff, 1f);
+			}
+
+			if (renderQueue.getValue()) {
+				for (Pair<BlockPos, EnumFacing> pair : blockQueue) {
+					if (modeSetting.getValue() != Mode.DAMAGE) {
+						if (fill.getValue()) Renderer3D.drawBBFill(new AxisAlignedBB(pair.getKey()), ColorUtils.changeAlpha(fillColor.getValue(), 100));
+						if (outline.getValue())
+							Renderer3D.drawBBOutline(new AxisAlignedBB(pair.getKey()), outlineWidth.getValue(), ColorUtils.changeAlpha(outlineColor.getValue(), 100));
+					}
+				}
+			}
 		}
 	}
 
 	@SubscribeEvent
 	public void onBlockClick(BlockEvent.Click event) {
-		if (currentBlock == null) {
-			currentBlock = event.getBlockPos();
-			currentFace = event.getFace();
-		} else
-			breakQueue.add(new Pair<>(event.getBlockPos(), event.getFace()));
+		if (!WorldUtils.canBreak(event.getBlockPos())) return;
 
+		if (block == null)
+			block = new Pair<>(event.getBlockPos(), event.getFace());
+		else if (queue.getValue() && modeSetting.getValue() == Mode.PACKET)
+			blockQueue.add(new Pair<>(event.getBlockPos(), event.getFace()));
 
-		if (mode.getValue() == Mode.DAMAGE) {
+		if (modeSetting.getValue() == Mode.DAMAGE)
 			mc.playerController.curBlockDamageMP = startDamage.getValue();
-		} else {
-			mc.player.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.START_DESTROY_BLOCK, currentBlock, currentFace));
-			mc.player.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.STOP_DESTROY_BLOCK, currentBlock, currentFace));
-
-			if (mode.getValue() == Mode.INSTANT) {
-				mc.world.setBlockToAir(currentBlock);
-			}
+		else {
+			mc.player.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.START_DESTROY_BLOCK, block.getKey(), block.getVal()));
+			mc.player.connection.sendPacket(new CPacketPlayerDigging(CPacketPlayerDigging.Action.STOP_DESTROY_BLOCK, block.getKey(), block.getVal()));
+			if (modeSetting.getValue() == Mode.INSTANT)
+				mc.world.setBlockToAir(block.getKey());
 		}
 	}
 
 	@SubscribeEvent
 	public void onBlockDamage(BlockEvent.Damage event) {
-		if (mode.getValue() == Mode.DAMAGE) {
-			if (mc.playerController.curBlockDamageMP >= endDamage.getValue()) {
-				mc.playerController.curBlockDamageMP = 1f;
-			}
+		if (modeSetting.getValue() == Mode.DAMAGE && mc.playerController.curBlockDamageMP >= stopDamage.getValue()) {
+			mc.playerController.curBlockDamageMP = 1f;
 		}
 	}
 
 	@SubscribeEvent
 	public void onBlockBreak(BlockEvent.Break event) {
-		if (event.getBlockPos() == currentBlock) {
-			currentBlock = null;
-			currentFace = null;
-
-			Pair<BlockPos, EnumFacing> pair = breakQueue.poll();
-			currentBlock = Objects.requireNonNull(pair).getKey();
-			currentFace = Objects.requireNonNull(pair).getVal();
-		}
+		if (event.getBlockPos() == block.getKey())
+			block = blockQueue.isEmpty() ? null : blockQueue.poll();
 	}
 
 	private enum Mode {
@@ -148,12 +141,6 @@ public class SpeedMine extends Module {
 		PACKET,
 		INSTANT,
 		BREAKER,
-	}
-
-	private enum Haste {
-		NONE,
-		ONE,
-		TWO
 	}
 
 }

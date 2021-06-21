@@ -14,4 +14,5 @@ public class ForceSurvival extends Module {
 	public void onUpdate() {
 		mc.playerController.setGameType(GameType.SURVIVAL);
 	}
+
 }
