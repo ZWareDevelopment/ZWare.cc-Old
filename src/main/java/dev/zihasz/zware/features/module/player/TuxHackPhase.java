@@ -34,10 +34,10 @@ public class TuxHackPhase extends Module {
 	public TuxHackPhase() {
 		super("TuxHackPhase", "BlockPhase pasted from TuxHack", Category.PLAYER);
 
-		left = new KeyBinding("Left", Keyboard.KEY_LEFT, "combat");
-		right = new KeyBinding("Right", Keyboard.KEY_RIGHT, "combat");
-		down = new KeyBinding("Down", Keyboard.KEY_DOWN, "combat");
-		up = new KeyBinding("Up", Keyboard.KEY_UP, "combat");
+		left = new KeyBinding("Left", Keyboard.KEY_LEFT, "ZWare.cc");
+		right = new KeyBinding("Right", Keyboard.KEY_RIGHT, "ZWare.cc");
+		down = new KeyBinding("Down", Keyboard.KEY_DOWN, "ZWare.cc");
+		up = new KeyBinding("Up", Keyboard.KEY_UP, "ZWare.cc");
 
 		ClientRegistry.registerKeyBinding(left);
 		ClientRegistry.registerKeyBinding(right);
