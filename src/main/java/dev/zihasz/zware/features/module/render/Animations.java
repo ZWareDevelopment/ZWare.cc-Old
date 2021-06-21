@@ -18,6 +18,7 @@ public class Animations extends Module {
 	}
 
 	private final Setting<Mode> mode = new Setting<>("OldAnimations", "Bring back old animations", Mode.OneDotEight);
+	// private final Setting<Boolean> oldBlocking = new Setting<>("OldBock", "Block your sword like in old versions", false);
 	private final Setting<Swing> swing = new Setting<>("Swing", "Swing settings", Swing.Mainhand);
 	private final Setting<Boolean> slow = new Setting<>("Slow", "Swing slower", true);
 
@@ -28,7 +29,7 @@ public class Animations extends Module {
 		if (swing.getValue() == Swing.Offhand) {
 			mc.player.swingingHand = EnumHand.OFF_HAND;
 		}
-		if (mode.getValue() == Mode.OneDotEight) {
+		if (mode.getValue() != Mode.Normal) {
 			if (mc.entityRenderer.itemRenderer.prevEquippedProgressMainHand >= 0.9) {
 				mc.entityRenderer.itemRenderer.equippedProgressMainHand = 1.0f;
 				mc.entityRenderer.itemRenderer.itemStackMainHand = mc.player.getHeldItemMainhand();
@@ -69,6 +70,7 @@ public class Animations extends Module {
 	private enum Mode {
 		Normal,
 		OneDotEight,
+		OneDotSeven,
 	}
 
 }
