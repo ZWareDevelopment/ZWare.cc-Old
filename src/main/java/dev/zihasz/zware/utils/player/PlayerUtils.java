@@ -59,4 +59,17 @@ public class PlayerUtils implements Util {
 		}
 	}
 
+	public static double getDiffX() {
+		return mc.player.posX - mc.player.lastTickPosX;
+	}
+	public static double getDiffY() {
+		return mc.player.posY - mc.player.lastTickPosY;
+	}
+	public static double getDiffZ() {
+		return mc.player.posZ - mc.player.lastTickPosZ;
+	}
+	public static Vec3d getDiff() {
+		return new Vec3d(getDiffX(), getDiffY(), getDiffZ());
+	}
+
 }

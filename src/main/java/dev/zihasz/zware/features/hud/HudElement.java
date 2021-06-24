@@ -1,6 +1,7 @@
 package dev.zihasz.zware.features.hud;
 
 import dev.zihasz.zware.features.Feature;
+import dev.zihasz.zware.utils.render.Quad;
 import net.minecraftforge.common.MinecraftForge;
 
 public abstract class HudElement extends Feature {

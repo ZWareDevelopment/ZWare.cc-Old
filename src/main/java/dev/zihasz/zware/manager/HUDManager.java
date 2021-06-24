@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class HUDManager {
+public class HudManager {
 
 	private static final List<HudElement> elements = new ArrayList<>();
 
-	public HUDManager() {
+	public HudManager() {
 		Set<Class> moduleClasses = findClasses(HudElement.class.getPackage().getName(), HudElement.class);
 		moduleClasses.forEach(moduleClass -> {
 			try {

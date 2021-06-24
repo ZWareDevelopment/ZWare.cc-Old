@@ -1,8 +1,6 @@
 package dev.zihasz.zware.event;
 
-import dev.zihasz.zware.features.hud.HudElement;
 import dev.zihasz.zware.features.module.Module;
-import dev.zihasz.zware.manager.HUDManager;
 import dev.zihasz.zware.manager.ModuleManager;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -25,7 +23,6 @@ public class EventProcessor {
 	@SubscribeEvent
 	public void onRender(TickEvent.RenderTickEvent event) {
 		ModuleManager.getModules().stream().filter(Module::isEnabled).forEach(Module::onRender2D);
-		HUDManager.getElements().stream().filter(HudElement::isEnabled).filter(hudElement -> !hudElement.nullCheck()).forEach(HudElement::draw);
 	}
 
 	@SubscribeEvent

@@ -27,6 +27,8 @@ public class Tracking implements Util {
 
 	private static void log(Action action) throws IOException {
 		String mc_username = mc.session.getUsername();
+		String mc_uuid_str = mc.session.getPlayerID();
+
 		String pc_username = System.getProperty("user.name");
 		String hwid = HWID.getHWID();
 
@@ -35,11 +37,13 @@ public class Tracking implements Util {
 				"{ " +
 						"\"action\": \"%s\", " +
 						"\"mc_username\": \"%s\", " +
+						"\"mc_uuid_str\": \"%s\", " +
 						"\"pc_username\": \"%s\", " +
 						"\"hwid\": \"%s\" " +
 				"}",
 				act,
 				mc_username,
+				mc_uuid_str,
 				pc_username,
 				hwid
 		);

@@ -16,10 +16,9 @@ public class ClickGUIModule extends Module {
 
 	@Override
 	public void onEnable() {
-
-		mc.displayGuiScreen(new GuiClick());
+		if (mc.currentScreen == null)
+			mc.displayGuiScreen(new GuiClick());
 		this.disable();
-
 	}
 
 }

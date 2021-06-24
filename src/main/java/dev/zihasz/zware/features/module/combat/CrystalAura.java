@@ -84,9 +84,7 @@ public class CrystalAura extends Module {
 	private final SubSetting<Boolean> lockPBD = new SubSetting<>(placeSetting, "LockPBD", "Lock place-break delay. Useful on some servers.", true);
 	private final SubSetting<Boolean> placeSwing = new SubSetting<>(placeSetting, "PlaceSwing", "Swing arm when placing", true);
 	private final SubSetting<Boolean> fullySimPlace = new SubSetting<>(placeSetting, "FillySimulatePlace", "Simulate all place positions, if off, we will place the first possible location, but will have better performance.", true);
-	private final SubSetting<Boolean> facePlace = new SubSetting<>(placeSetting, "FacePlace", "Place faces", true);
-	private final SubSetting<Integer> facePlaceHealth = new SubSetting<>(placeSetting, "FacePlaceHealth", "Health to place faces at", 8, 0, 36);
-	private final SubSetting<Boolean> armorBreaker = new SubSetting<>(placeSetting, "ArmorBreaker", "Breaks armor", true);
+	private final SubSetting<Integer> facePlaceHealth = new SubSetting<>(placeSetting, "FacePlaceHealth", "Health to place faces at", 10, 0, 36);
 	private final SubSetting<Integer> armorBreakerPercent = new SubSetting<>(placeSetting, "ArmorBreaker%", "% to break armors at", 25, 0, 100);
 	private final SubSetting<Boolean> noPlaceSuicide = new SubSetting<>(placeSetting, "NoPlaceSuicide", "Dont commit suicide when placing", true);
 	private final SubSetting<Boolean> thirteen = new SubSetting<>(placeSetting, "1.13+", "Use on servers like ec.me.", false);
@@ -140,6 +138,11 @@ public class CrystalAura extends Module {
 
 		if (renderCryStats.getValue())
 			doCrystalStats();
+	}
+
+	@Override
+	public void onDisable() {
+		reset();
 	}
 
 	@SubscribeEvent
@@ -386,7 +389,25 @@ public class CrystalAura extends Module {
 	}
 
 	private EntityLivingBase getTarget() {
-		return this.renderTarget = mc.world.loadedEntityList.stream().filter(entity -> entity instanceof EntityPlayer).map(entity -> (EntityPlayer) entity).filter(player -> !player.isDead).filter(player -> player != mc.player).filter(player -> EntityUtils.getDistance(player) < range.getValue()).filter(player -> !RelationManager.isFriend(player.getGameProfile().getId())).filter(player -> RelationManager.isEnemy(player.getGameProfile().getId())).min(Comparator.comparingDouble(EntityUtils::getDistance)).orElse(mc.world.loadedEntityList.stream().filter(entity -> entity instanceof EntityPlayer).map(entity -> (EntityPlayer) entity).filter(player -> !player.isDead).filter(player -> player != mc.player).filter(player -> EntityUtils.getDistance(player) < range.getValue()).filter(player -> !RelationManager.isFriend(player.getGameProfile().getId())).min(Comparator.comparingDouble(EntityUtils::getDistance)).orElse(null));
+		return this.renderTarget = mc.world.loadedEntityList.stream()
+				.filter(entity -> entity instanceof EntityPlayer)
+				.map(entity -> (EntityPlayer) entity)
+				.filter(player -> !player.isDead)
+				.filter(player -> player != mc.player)
+				.filter(player -> EntityUtils.getDistance(player) < range.getValue())
+				.filter(player -> !RelationManager.isFriend(player.getGameProfile().getId()))
+				.filter(player -> RelationManager.isEnemy(player.getGameProfile().getId()))
+				.min(Comparator.comparingDouble(EntityUtils::getDistance))
+				.orElse(mc.world.loadedEntityList.stream()
+						.filter(entity -> entity instanceof EntityPlayer)
+						.map(entity -> (EntityPlayer) entity)
+						.filter(player -> !player.isDead)
+						.filter(player -> player != mc.player)
+						.filter(player -> EntityUtils.getDistance(player) < range.getValue())
+						.filter(player -> !RelationManager.isFriend(player.getGameProfile().getId()))
+						.min(Comparator.comparingDouble(EntityUtils::getDistance))
+						.orElse(null)
+				);
 	}
 	private BlockPos getPlaceBlock() {
 		BlockPos bestPosition = null;
