@@ -25,7 +25,7 @@ public class BetterOffhand extends Module {
 
 	@Override
 	public void onUpdate() {
-		if (timer.passedMS(TimeUtils.FloatToLong(delay.getValue()))) {
+		if (timer.passedMS(delay.getValue().longValue())) {
 			if (PlayerUtils.getHealth() > health.getValue()) {
 				if (mc.player.getHeldItemMainhand().getItem() == modeToItem(item.getValue())) return;
 

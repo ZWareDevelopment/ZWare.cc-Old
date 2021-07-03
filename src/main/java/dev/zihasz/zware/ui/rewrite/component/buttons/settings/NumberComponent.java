@@ -16,7 +16,7 @@ public class NumberComponent extends SettingComponent<Number> {
 
 	public NumberComponent(ModuleComponent parent, Setting<Number> setting, int offset) {
 		super(parent, setting, offset);
-		dragWidth = Frame.FRAME_WIDTH * (setting.getValue().doubleValue() / (setting.getMax().doubleValue() - setting.getMin().doubleValue()));
+		dragWidth = Frame.FRAME_WIDTH * ((setting.getValue().doubleValue() / (setting.getMax().doubleValue() - setting.getMin().doubleValue())));
 	}
 
 	@Override
@@ -36,9 +36,9 @@ public class NumberComponent extends SettingComponent<Number> {
 			dragWidth = MathUtils.clamp(0, Frame.FRAME_WIDTH - 1, (x - 1) - getQuad().getX());
 
 			if (dragWidth == 0) {
-				setting.setValue(setting.getMin().doubleValue());
+					setting.setValue(setting.getMin());
 			} else {
-				Number newValue = MathUtils.roundToPlace(((dragWidth / (Frame.FRAME_WIDTH - 1)) * (max - min) + min), setting.getValue() instanceof Integer ? 0 : 2);
+				Number newValue = (Number) MathUtils.roundToPlace(((dragWidth / (Frame.FRAME_WIDTH - 1)) * (max - min) + min), setting.getValue() instanceof Integer || setting.getValue() instanceof Long ? 0 : 2);
 				setting.setValue(newValue);
 			}
 		} else if (hovered(x, y))

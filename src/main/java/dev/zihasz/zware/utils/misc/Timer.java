@@ -21,7 +21,7 @@ public class Timer implements Util {
 
 	/**
 	 * Set the timers current time.
-	 * @param time The time in *nano* seconds.
+	 * @param time The time in <i>nano</i> seconds.
 	 */
 	public void setTime(long time) { this.time = time; }
 

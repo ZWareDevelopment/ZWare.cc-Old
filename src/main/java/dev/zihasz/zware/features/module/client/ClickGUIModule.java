@@ -8,7 +8,7 @@ import org.lwjgl.input.Keyboard;
 
 public class ClickGUIModule extends Module {
 	public ClickGUIModule() {
-		super("GuiClick", "Enables the GuiClick.", Category.CLIENT, Keyboard.KEY_RCONTROL);
+		super("ClickGui", "Enables the GuiClick.", Category.CLIENT, Keyboard.KEY_RCONTROL);
 	}
 
 	public static Setting<Integer> animationSpeed = new Setting<>("", "", 0, 0, 0);

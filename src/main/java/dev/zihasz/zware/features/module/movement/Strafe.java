@@ -1,6 +1,6 @@
 package dev.zihasz.zware.features.module.movement;
 
-import dev.zihasz.zware.event.events.MoveEvent;
+import dev.zihasz.zware.event.events.PlayerEvent;
 import dev.zihasz.zware.features.module.Category;
 import dev.zihasz.zware.features.module.Module;
 import dev.zihasz.zware.features.setting.Setting;
@@ -50,7 +50,7 @@ public class Strafe extends Module {
 	}
 
 	@SubscribeEvent
-	public void onMove(MoveEvent event) {
+	public void onMove(PlayerEvent.Move event) {
 
 		if (timer.getValue()) {
 			if (mc.player.onGround)

@@ -5,7 +5,6 @@
   "package": "dev.zihasz.zware.mixin",
   "refmap": "mixins.zware.refmap.json",
   "mixins": [
-	"entity.MixinEntity",
 	"network.MixinC00Handshake",
 	"network.MixinNetworkManager",
 	"player.MixinAbstractClientPlayer",
@@ -13,5 +12,8 @@
 	"player.MixinPlayerControllerMP",
 	"render.MixinItemRenderer",
 	"render.MixinRenderItem"
+  ],
+  "client": [
+	"player.MixinEntityPlayerSP"
   ]
 }

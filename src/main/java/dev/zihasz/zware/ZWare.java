@@ -3,7 +3,6 @@ package dev.zihasz.zware;
 import dev.zihasz.zware.event.EventProcessor;
 import dev.zihasz.zware.manager.*;
 import dev.zihasz.zware.mixin.MixinLoader;
-import dev.zihasz.zware.security.Tracking;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -45,8 +44,6 @@ public class ZWare {
 	 */
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent event) {
-		Tracking.onStarted();
-
 		clientManager = new ClientManager();
 		commandManager = new CommandManager();
 		moduleManager = new ModuleManager();
@@ -55,7 +52,6 @@ public class ZWare {
 		ConfigManager.load();
 
 		Runtime.getRuntime().addShutdownHook(new Thread(ConfigManager::save));
-		Runtime.getRuntime().addShutdownHook(new Thread(Tracking::onStopped));
 	}
 
 	/**

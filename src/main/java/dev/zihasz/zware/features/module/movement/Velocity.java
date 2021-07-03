@@ -1,6 +1,7 @@
 package dev.zihasz.zware.features.module.movement;
 
 import dev.zihasz.zware.event.events.PacketEvent;
+import dev.zihasz.zware.event.events.PushEvent;
 import dev.zihasz.zware.features.module.Category;
 import dev.zihasz.zware.features.module.Module;
 import net.minecraft.network.Packet;
@@ -24,6 +25,11 @@ public class Velocity extends Module {
 		if (rawPacket instanceof SPacketExplosion) {
 			event.cancel();
 		}
+	}
+
+	@SubscribeEvent
+	public void onPush(PushEvent event) {
+		event.cancel();
 	}
 
 }

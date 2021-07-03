@@ -14,7 +14,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 
-public class InstantBurrow extends Module {
+public class Burrow extends Module {
 
 	private final Setting<Float> offset = new Setting<>("Offset", "Offset", 7.0F, -20.0F, 20.0F);
 	private final Setting<Boolean> sneak = new Setting<>("Sneak", "Sneak", true);
@@ -24,8 +24,8 @@ public class InstantBurrow extends Module {
 	private BlockPos originalPos;
 	private int oldSlot = -1;
 
-	public InstantBurrow() {
-		super("InstantBurrow", "ew delete minecraft rn", Category.COMBAT);
+	public Burrow() {
+		super("Burrow", "ew delete minecraft rn", Category.COMBAT);
 	}
 
 	@Override

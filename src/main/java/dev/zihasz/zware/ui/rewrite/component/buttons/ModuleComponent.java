@@ -4,11 +4,11 @@ import dev.zihasz.zware.features.module.Module;
 import dev.zihasz.zware.features.setting.Setting;
 import dev.zihasz.zware.ui.rewrite.GuiClick;
 import dev.zihasz.zware.ui.rewrite.component.Component;
-import dev.zihasz.zware.ui.rewrite.component.panel.Frame;
 import dev.zihasz.zware.ui.rewrite.component.buttons.settings.BooleanComponent;
 import dev.zihasz.zware.ui.rewrite.component.buttons.settings.ModeComponent;
 import dev.zihasz.zware.ui.rewrite.component.buttons.settings.NumberComponent;
 import dev.zihasz.zware.ui.rewrite.component.buttons.settings.SettingComponent;
+import dev.zihasz.zware.ui.rewrite.component.panel.Frame;
 import dev.zihasz.zware.utils.render.Quad;
 import dev.zihasz.zware.utils.render.Renderer2D;
 import dev.zihasz.zware.utils.render.TextRenderer;
@@ -111,7 +111,8 @@ public class ModuleComponent implements Component {
 	public void keyTyped(char typedChar, int button) {
 		if (button != Keyboard.KEY_NONE) {
 			if (button == Keyboard.KEY_DELETE) search = "";
-			else if (button == Keyboard.KEY_BACK && !search.equals("")) search = search.substring(0, search.length() - 1);
+			else if (button == Keyboard.KEY_BACK && !search.equals(""))
+				search = search.substring(0, search.length() - 1);
 			else if (button == Keyboard.KEY_BACK) return;
 			else if (button == Keyboard.KEY_RETURN) search = "";
 			else if (ChatAllowedCharacters.isAllowedCharacter(typedChar)) search += typedChar;
@@ -151,36 +152,47 @@ public class ModuleComponent implements Component {
 	public Frame getParent() {
 		return parent;
 	}
+
 	public void setParent(Frame parent) {
 		this.parent = parent;
 	}
+
 	public Module getMod() {
 		return mod;
 	}
+
 	public ArrayList<SettingComponent<?>> getSettings() {
 		return settings;
 	}
+
 	public void setSettings(ArrayList<SettingComponent<?>> settings) {
 		this.settings = settings;
 	}
+
 	public int getSettingOff() {
 		return settingOff;
 	}
+
 	public void setSettingOff(int settingOff) {
 		this.settingOff = settingOff;
 	}
+
 	public int getOffset() {
 		return offset;
 	}
+
 	public void setOffset(int offset) {
 		this.offset = offset;
 	}
+
 	public boolean isOpen() {
 		return open;
 	}
+
 	public void setOpen(boolean open) {
 		this.open = open;
 	}
+
 	public String getModuleName() {
 		return StringUtils.capitalize(mod.getName().toLowerCase());
 	}

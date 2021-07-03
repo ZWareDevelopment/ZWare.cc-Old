@@ -1,6 +1,7 @@
 package dev.zihasz.zware.ui.rewrite;
 
 import dev.zihasz.zware.features.module.Category;
+import dev.zihasz.zware.features.module.Module;
 import dev.zihasz.zware.ui.base.GuiBase;
 import dev.zihasz.zware.ui.colors.Dracula;
 import dev.zihasz.zware.ui.rewrite.component.Component;
@@ -12,6 +13,9 @@ import org.lwjgl.input.Keyboard;
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.stream.Collectors;
 
 public class GuiClick extends GuiBase {
 	public static final ColorScheme defaultScheme = new ColorScheme(new Color(0xff98ff98), new Color(0xff3f3f3f), new Color(0xfff3f3f3));
@@ -24,7 +28,7 @@ public class GuiClick extends GuiBase {
 		this.frames = new ArrayList<>();
 
 		int x = X_OFF_DEFAULT;
-		for (Category c : Category.values()) {
+		for (Category c : Arrays.stream(Category.values()).sorted(Comparator.comparing(Enum::name)).collect(Collectors.toList())) {
 			frames.add(new dev.zihasz.zware.ui.rewrite.component.panel.Frame(x, 20, c));
 			x += dev.zihasz.zware.ui.rewrite.component.panel.Frame.FRAME_WIDTH + X_OFF_DEFAULT;
 		}

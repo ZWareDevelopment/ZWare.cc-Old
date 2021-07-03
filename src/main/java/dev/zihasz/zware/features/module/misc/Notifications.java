@@ -1,4 +1,4 @@
-package dev.zihasz.zware.features.module.client;
+package dev.zihasz.zware.features.module.misc;
 
 import dev.zihasz.zware.features.module.Category;
 import dev.zihasz.zware.features.module.Module;

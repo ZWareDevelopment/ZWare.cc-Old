@@ -1,5 +1,6 @@
 package dev.zihasz.zware.ui.rewrite.component.panel;
 
+import dev.zihasz.zware.features.Feature;
 import dev.zihasz.zware.features.module.Category;
 import dev.zihasz.zware.features.module.Module;
 import dev.zihasz.zware.manager.ModuleManager;
@@ -12,6 +13,9 @@ import dev.zihasz.zware.utils.render.TextRenderer;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Frame implements Component {
 	public static final int FRAME_WIDTH = 100;
@@ -30,7 +34,7 @@ public class Frame implements Component {
 		this.offset = 0;
 
 		buttons = new ArrayList<>();
-		for (Module mod : ModuleManager.getModules(c)) {
+		for (Module mod : ModuleManager.getModules(c).stream().sorted(Comparator.comparing(Feature::getName)).collect(Collectors.toList())) {
 			buttons.add(new ModuleComponent(this, mod, offset));
 			offset += ModuleComponent.MODULE_HEIGHT;
 		}

@@ -1,8 +1,7 @@
 package dev.zihasz.zware.mixin.player;
 
-import dev.zihasz.zware.ZWare;
 import dev.zihasz.zware.event.EventState;
-import dev.zihasz.zware.event.events.WaterPushEvent;
+import dev.zihasz.zware.event.events.PushEvent;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
@@ -21,9 +20,11 @@ public abstract class MixinEntityPlayer extends EntityLivingBase {
 
 	@Inject(method = "isPushedByWater", at = @At("HEAD"), cancellable = true)
 	public void onPushedByWater(CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
-		WaterPushEvent event = new WaterPushEvent(EventState.PRE);
+		PushEvent.Liquid event = new PushEvent.Liquid(EventState.PRE);
 		MinecraftForge.EVENT_BUS.post(event);
-		if (event.isCanceled()) callbackInfoReturnable.setReturnValue(false);
+
+		if (event.isCanceled())
+			callbackInfoReturnable.setReturnValue(false);
 	}
 
 }

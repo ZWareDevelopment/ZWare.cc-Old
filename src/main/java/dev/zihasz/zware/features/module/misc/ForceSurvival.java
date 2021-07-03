@@ -13,6 +13,7 @@ public class ForceSurvival extends Module {
 	@Override
 	public void onUpdate() {
 		mc.playerController.setGameType(GameType.SURVIVAL);
+		mc.player.noClip = false;
 	}
 
 }
